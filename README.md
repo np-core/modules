@@ -36,7 +36,7 @@ Modules:
 * Pilon
 * Racon
 * Rasusa
-* Rraxml
+* RAxML-NG
 * Shovill
 * Snippy
 * TreeTime
@@ -50,10 +50,10 @@ Purpose and usage of the main pipeline applications in `np-core`:
 
 `nextflow run np-core/assembly --help`
 
-Pipeline for hybrid and nanopore  bacterial genome assembly including final genotyping and annotations of the assemblies. Usually run on barcoded sequence runs which have been basecalled and demultiplexed. I use the pipeline for both Illumina population genomics (genotyping from large collection of genome assemblies) and to process hybrid sequence data from multiplex bacterial runs. Illumina data is used to polish the long-read assemblies. Rference genome assembly and polishing is implemented as subworkflow with Trycycler.
+Pipeline for hybrid and nanopore  bacterial genome assembly including final genotyping and annotations of the assemblies. Usually run on barcoded sequence runs which have been basecalled and demultiplexed. I use the pipeline for both Illumina population genomics (genotyping from large collection of genome assemblies) and to process hybrid sequence data from multiplex bacterial runs. Illumina data is used to polish the long-read assemblies with Medaka.
 
 ### :sauropod: Phybeast
 
 `nextflow run np-core/phybeast --help`
 
-Pipeline for phylogenomics and phylodynamics of bacterial pathogens at population level, inlcuding subworkflow for outbreak attribution using nanopore data and lineage context datasets.
+Pipeline for phylogenomics and phylodynamics of bacterial pathogens using population-wide data, inlcuding subworkflow for outbreak attribution using nanopore data alone.
