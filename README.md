@@ -39,3 +39,14 @@ Modules:
 * Snippy
 * TreeTime
 * Phybeast
+
+## Pipelines
+
+Purpose and usage of the main pipeline applications in `np-core`:
+
+### Assembly
+
+`nextflow run np-core/assembly --help`
+
+Pipeline for hybrid and nanopore  bacterial genome assembly including final genotyping and annotations of the assemblies. Usually run on barcoded sequence runs which have been basecalled and demultiplexed. I use the pipeline for both Illumina population genomics (genotyping from large collection of genome assemblies) and to process hybrid sequence data from multiplex bacterial runs. Illumina data is used to polish the long-read assemblies. Rference genome assembly and polishing is implemented as subworkflow with Trycycler.
+
