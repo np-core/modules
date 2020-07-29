@@ -19,7 +19,9 @@ Subworkflows:
 * ONT QC
 * ONT Assembly
 * Illumina Assembly
-* Phylodynamics
+* Reference Assembly
+* Lineage Phylodynamics
+* ONT Outbreak Attribution
 
 Modules:
 
@@ -44,9 +46,14 @@ Modules:
 
 Purpose and usage of the main pipeline applications in `np-core`:
 
-### Assembly
+### :crocodile: Assembly
 
 `nextflow run np-core/assembly --help`
 
 Pipeline for hybrid and nanopore  bacterial genome assembly including final genotyping and annotations of the assemblies. Usually run on barcoded sequence runs which have been basecalled and demultiplexed. I use the pipeline for both Illumina population genomics (genotyping from large collection of genome assemblies) and to process hybrid sequence data from multiplex bacterial runs. Illumina data is used to polish the long-read assemblies. Rference genome assembly and polishing is implemented as subworkflow with Trycycler.
 
+### :sauropod: Phybeast
+
+`nextflow run np-core/phybeast --help`
+
+Pipeline for phylogenomics and phylodynamics of bacterial pathogens at population level, inlcuding subworkflow for outbreak attribution using nanopore data and lineage context datasets.
