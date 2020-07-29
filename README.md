@@ -9,10 +9,8 @@ Pipelines:
 
 * [assembly](https://github.com/np-core/assembly)
 * [phybeast](https://github.com/np-core/phybeast)
-* [metagenomics](https://github.com/np-core/metagenomics)
 * [signal](https://github.com/np-core/signal)
 * [sepsis](https://github.com/np-core/sepsis)
-* [sketchy](https://github.com/np-core/sketchy)
 
 Subworkflows:
 
