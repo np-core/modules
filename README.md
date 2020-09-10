@@ -1,4 +1,4 @@
-# Core Pipelines
+# DSL2 Modules and Pipelines
 
 ![](https://img.shields.io/badge/lang-dsl2-41ab5d.svg)
 ![](https://img.shields.io/badge/version-0.1.0-addd8e.svg)
