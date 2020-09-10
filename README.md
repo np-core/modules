@@ -14,17 +14,17 @@ Purpose and usage of the main pipeline applications in `np-core`
 
 `nextflow run np-core/phybeast --help`
 
-Signal level analysis pipeline for Fast5 files, using NanoPath, Poremongo and Achilles linking into neural network training and dashboard for adaptive sampling.
+Signal level analysis pipeline for Fast5 files, using NanoPath, Poremongo and Achilles linking into neural network training and adaptive sampling. Real-time basecalling and monitoring in the dashboard component Blobfish, the ugly deep sea cousin of MinKNOW.
 
 ### :dragon: Pathogen
 
-Pipeline for detection and characteriziation of pathogens from metagenomic data, inlcuding real-time evaluation and reporting dashboard. Main component for the Queensland Genomics sepsis applications.
+Pipeline for detection and characteriziation of pathogens from metagenomic data, including real-time evaluation and reporting dashboard. Main component for the Queensland Genomics sepsis applications.
 
 ### :sauropod: Phybeast
 
 `nextflow run np-core/phybeast --help`
 
-Pipeline for phylogenomics and phylodynamics of bacterial pathogens using population-wide data, inlcuding subworkflow for outbreak attribution using nanopore data and Beastling implementation of bacterial Birth-Death model implementations on BEAGLE GPU.
+Pipeline for phylogenomics and phylodynamics of bacterial pathogens using population-wide data, including subworkflows for outbreak attribution using nanopore data and Beastling implementation of bacterial Birth-Death model implementations on BEAGLE GPUs.
 
 ### :crocodile: Assembly
 
