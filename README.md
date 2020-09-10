@@ -10,7 +10,7 @@ Nextflow implementations as pipeline modules and workflows for nanopore-driven b
 
 Purpose and usage of the main pipeline applications in `np-core`
 
-### ::octopus:: Signal
+### :octopus: Signal
 
 `nextflow run np-core/phybeast --help`
 
@@ -18,7 +18,7 @@ Signal level analysis pipeline for Fast5 files, using NanoPath, Poremongo and Ac
 
 ### :dragon: Pathogen
 
-Pipeline for detection and characteriziation of pathogens fro memtagenomic data, inlcuding real-time evaluation and reporting dashboard in Vue. Main component for the Queenslan Genomics sepsis groups.
+Pipeline for detection and characteriziation of pathogens from metagenomic data, inlcuding real-time evaluation and reporting dashboard. Main component for the Queensland Genomics sepsis applications.
 
 ### :sauropod: Phybeast
 
