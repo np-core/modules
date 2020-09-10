@@ -3,8 +3,9 @@
 ![](https://img.shields.io/badge/lang-dsl2-41ab5d.svg)
 ![](https://img.shields.io/badge/version-0.1.0-addd8e.svg)
 
-Nextflow implementations as pipeline modules and workflows for nanopore-driven bacterial genomics in DSL2
+Nextflow pipeline modules and workflows for nanopore-driven bacterial genomics in DSL2
 
+Before launching pipelines and dashboards please consider configuring your network setup for distributed resourcing with [`Netflow`](https://github.com/np-core/netflow)
 
 ## Pipelines
 
