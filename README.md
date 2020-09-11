@@ -38,12 +38,48 @@ Pipeline for hybrid and nanopore  bacterial genome assembly including final geno
 
 ## Modules
 
+**Basecalling**
+
 * Guppy
-* Qcat
-* Nanoq
-* Rasusa
+* qcat
+
+**Quality control*
+
+* nanoq
+* rasusa
+* checkm
+* coverm
+* fastp
+* dnadiff
+
+**Taxonomy**
+
 * Kraken2
 * Bracken
+* Pathogen (links, regex, host removal, coverage)
+
+**Variants**
+
+* Medaka
+* Megalodon
+* Snippy
+* Gubbins
+
+**Assembly**
+
 * Flye
 * Raven
-* Sketchy
+* Shovill
+* Racon
+* Pilon
+* Medaka
+
+**Phylodynamics**
+
+* Phybeast (date randomisation, variant sites)
+* RAxML-NG
+* TreeTime
+
+**Genotyping**
+
+* Genotype (Mykrobe, Abricate, SCCion)
