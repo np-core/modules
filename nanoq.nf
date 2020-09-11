@@ -109,3 +109,32 @@ process NanoqOffline {
     """
 
 }
+
+
+process NanoqQcat {
+
+    tag { id }
+    label "ont"
+
+    publishDir "$params.outdir/nanoq/$id", mode: "copy"
+
+    input:
+    tuple val(id), file(barcodes)
+
+    output:
+    tuple file("*.stats"), file("*.qc.fq")
+
+    """
+    for fq in $barcodes/*.fastq;
+    do
+        barcode=\$(basename \$fq .fastq)
+        if [[ ($params.length == 0) && ($params.quality == 0) ]]
+        then
+            nanoq -f \$fq -l $params.length -q $params.quality > /dev/null 2> \$barcode.stats
+            ln -s \$PWD/\$fq \$barcode.qc.fq
+        else
+            nanoq -f \$fq -l $params.length -q $params.quality > \$barcode.qc.fq 2> \$barcode.stats
+        fi
+    done
+    """
+}
