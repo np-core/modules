@@ -43,7 +43,7 @@ Pipeline for hybrid and nanopore  bacterial genome assembly including final geno
 * Guppy
 * qcat
 
-**Quality control*
+**Quality control**
 
 * nanoq
 * rasusa
@@ -65,6 +65,12 @@ Pipeline for hybrid and nanopore  bacterial genome assembly including final geno
 * Snippy
 * Gubbins
 
+**Phylodynamics**
+
+* Phybeast (date randomisation, variant sites)
+* RAxML-NG
+* TreeTime
+
 **Assembly**
 
 * Flye
@@ -73,12 +79,6 @@ Pipeline for hybrid and nanopore  bacterial genome assembly including final geno
 * Racon
 * Pilon
 * Medaka
-
-**Phylodynamics**
-
-* Phybeast (date randomisation, variant sites)
-* RAxML-NG
-* TreeTime
 
 **Genotyping**
 
