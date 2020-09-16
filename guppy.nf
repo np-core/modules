@@ -6,6 +6,7 @@ process Guppy {
 
     publishDir "$params.outdir/guppy", pattern: "*.telemetry"
     publishDir "$params.outdir/guppy", pattern: "*.summary"
+    publishDir "$params.outdir/guppy", pattern: "*.fq"
 
     input:
     tuple val(id), file(path)
