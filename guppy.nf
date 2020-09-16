@@ -15,16 +15,16 @@ process Guppy {
     tuple file("${id}.summary"), file("${id}.telemetry")
 
     """
-    mkdir fast5
 
     if [[ ($path == *.tar.gz) || ($path == *.tar) ]]
     then
+        mkdir fast5
         tar -xf $path -C fast5
     else
         mv $path fast5
     fi
 
-    guppy_basecaller -i fast5 -s $id -c $params.guppy_model -x "$params.devices" $params.guppy_params \
+    guppy_basecaller -i fast5 -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
         --gpu_runners_per_device $params.runners_per_device --chunk_size $params.chunk_size \
         --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers -r
 
