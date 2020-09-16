@@ -4,9 +4,10 @@ process Guppy {
     tag { id }
     label "guppy"
 
-    publishDir "$params.outdir/guppy", pattern: "*.telemetry"
-    publishDir "$params.outdir/guppy", pattern: "*.summary"
-    publishDir "$params.outdir/guppy", pattern: "*.fq"
+    publishDir "$params.outdir/guppy", mode: 'copy', pattern: "*.telemetry"
+    publishDir "$params.outdir/guppy", mode: 'copy', pattern: "*.summary"
+    publishDir "$params.outdir/guppy", mode: 'copy', pattern: "*.fq"
+    publishDir "$params.outdir/guppy", mode: 'symlink', pattern: "${id}"
 
     input:
     tuple val(id), file(path)
