@@ -26,7 +26,7 @@ process Guppy {
 
     guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
         --gpu_runners_per_device $params.runners_per_device --chunk_size $params.chunk_size \
-        --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers -r
+        --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers
 
     cat $id/*.fastq > ${id}.fq
 
