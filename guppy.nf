@@ -17,11 +17,16 @@ process Guppy {
 
     """
 
-    if [[ ($path == *.tar.gz) || ($path == *.tar) ]]
-    then
+    if [[ -d $path ]]; then
+        if [[ ($path == *.tar.gz) || ($path == *.tar) ]]
+        then
+            mkdir fast5_in
+            tar -xf $path -C fast5_in
+        else
+            mv $path fast5_in
+        fi
+    else [[ -f $path ]]; then
         mkdir fast5_in
-        tar -xf $path -C fast5_in
-    else
         mv $path fast5_in
     fi
 
