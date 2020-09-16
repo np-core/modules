@@ -18,16 +18,17 @@ process Guppy {
     """
 
     if [[ -d $path ]]; then
-        if [[ ($path == *.tar.gz) || ($path == *.tar) ]]
-        then
+        if [[ ($path == *.tar.gz) || ($path == *.tar) ]]; then
             mkdir fast5_in
             tar -xf $path -C fast5_in
         else
             mv $path fast5_in
         fi
-    else [[ -f $path ]]; then
+    elif [[ -f $path ]]; then
         mkdir fast5_in
         mv $path fast5_in
+    else
+        mkdir fast5_in
     fi
 
     guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
