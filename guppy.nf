@@ -31,9 +31,10 @@ process Guppy {
         mkdir fast5_in
     fi
 
-    guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
+    guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -d "$params.guppy_data" -x "$params.gpu_devices" $params.guppy_params \
         --gpu_runners_per_device $params.runners_per_device --chunk_size $params.chunk_size \
-        --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers
+        --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers \
+        --cpu_threads_per_caller $params.cpu_threads_per_caller
 
     cat $id/*.fastq > ${id}.fq
 
