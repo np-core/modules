@@ -18,13 +18,13 @@ process Guppy {
 
     if [[ ($path == *.tar.gz) || ($path == *.tar) ]]
     then
-        mkdir fast5
-        tar -xf $path -C fast5
+        mkdir fast5_in
+        tar -xf $path -C fast5_in
     else
-        mv $path fast5
+        mv $path fast5_in
     fi
 
-    guppy_basecaller -i fast5 -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
+    guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -x "$params.gpu_devices" $params.guppy_params \
         --gpu_runners_per_device $params.runners_per_device --chunk_size $params.chunk_size \
         --chunks_per_runner $params.chunks_per_runner --num_callers $params.num_callers -r
 
