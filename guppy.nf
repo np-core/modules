@@ -18,18 +18,25 @@ process Guppy {
 
     """
 
-    if [[ -d $path ]]; then
+    if [[ -f $path ]]; then
+        # if the path variable is a single file
         if [[ ($path == *.tar.gz) || ($path == *.tar) ]]; then
+            # if it is archived
             mkdir fast5_in
             tar -xf $path -C fast5_in
         else
+            # if it is a single file
+            mkdir fast5_in
             mv $path fast5_in
         fi
-    elif [[ -f $path ]]; then
+    elif [[ -d $path ]]; then
+        # if the path variable is a single directory
         mkdir fast5_in
         mv $path fast5_in
     else
+        # if the path variable is a list of files
         mkdir fast5_in
+        mv $path fast5_in
     fi
 
     guppy_basecaller -i fast5_in -s $id -c $params.guppy_model -d "$params.guppy_data" -x "$params.gpu_devices" $params.guppy_params \
