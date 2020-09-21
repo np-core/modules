@@ -11,7 +11,7 @@
         file("$id") // whole output folder
 
         """
-        snippy --cpus $task.cpus --outdir $id --prefix $id --reference $reference --R1 $forward --R2 $reverse
+        snippy --cpus $task.cpus --outdir $id --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
         """
 
     }
@@ -29,7 +29,7 @@
         file("$id") // whole output folder
 
         """
-        snippy --cpus $task.cpus --outdir $id --prefix $id --reference $reference --ctgs $fasta
+        snippy --cpus $task.cpus --outdir $id --prefix $id --reference $reference --ctgs $fasta $params.snippy_params
         """
 
     }
@@ -37,7 +37,7 @@
     process SnippyCore {
 
         label "snippy"
-        tag { "CoreAlignment" }
+        tag { "SnippyCore" }
 
         publishDir "${params.outdir}/alignment", mode: "copy", pattern: "snp.core.fasta"
         publishDir "${params.outdir}/alignment", mode: "symlink", pattern: "wgs.core.fasta"
