@@ -39,7 +39,8 @@
         label "snippy"
         tag { "CoreAlignment" }
 
-        publishDir "${params.outdir}/alignment", mode: "copy", pattern: "*.fasta"
+        publishDir "${params.outdir}/alignment", mode: "copy", pattern: "snp.core.fasta"
+        publishDir "${params.outdir}/alignment", mode: "symlink", pattern: "wgs.core.fasta"
 
         input:
         file(snippy_outputs)  // collected list of snippy output directories
