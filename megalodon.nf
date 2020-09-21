@@ -1,13 +1,46 @@
 process MegalodonVariants {
 
     label "megalodon"
+    tag { "Megalodon: $id" }
+
+    publishDir "${params.outdir}/megalodon", mode: "copy"
+
+    input:
+    file(reference)
+    file(candidates)
+    tuple val(id), file(path)
+
+    output:
+    file("${panel}_${barcode}")
+
+    """
+    megalodon --guppy-server-path $params.guppy_server_path \
+            --output-directory ${id} \
+            --outputs variants \
+            --reference $reference \
+            --haploid \
+            --variant-filename $candidates \
+            --devices $params.devices \
+            --processes $task.cpus \
+            --guppy-server-port auto \
+            --guppy-params "$params.guppy_params" \
+            --guppy-config "$params.guppy_config" \
+            $path
+    """
+
+}
+
+process MegalodonVariantsPanels {
+
+    label "megalodon"
     tag { "Megalodon: $panel - $barcode" }
 
     publishDir "${params.outdir}/megalodon", mode: "copy"
 
     input:
     file(reference)
-    tuple val(port), val(panel), val(barcode), file(path)
+    file(candidates)
+    tuple val(panel), val(barcode), file(path)
 
     output:
     file("${panel}_${barcode}")
@@ -18,13 +51,14 @@ process MegalodonVariants {
             --outputs variants \
             --reference $reference \
             --haploid \
-            --variant-filename $params.candidates \
+            --variant-filename $candidates \
             --devices $params.devices \
             --processes $task.cpus \
-            --guppy-server-port $port \
+            --guppy-server-port auto \
             --guppy-params "$params.guppy_params" \
-            --guppy-config $params.guppy_config 
+            --guppy-config $params.guppy_config \
             $path 
     """
 
 }
+
