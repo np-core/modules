@@ -29,7 +29,6 @@ process Bonito {
         fi
     elif [[ -d $path ]]; then
         # if the path variable is a single directory
-        mkdir fast5_in
         mv $path fast5_in
     else
         echo "Error in parsing input"
