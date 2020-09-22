@@ -14,12 +14,11 @@ process Guppy {
 
     output:
     tuple val(id), file("${id}.fq")
-    tuple file("${id}.summary"), file("${id}.telemetry")
+    tuple file("${id}.summary"), file("${id}.telemetry"), file("${id}")
 
     """
 
     if [[ -f $path ]]; then
-        # if the path variable is a single file
         if [[ ($path == *.tar.gz) || ($path == *.tar) ]]; then
             # if it is archived
             mkdir fast5_in
@@ -67,7 +66,7 @@ process GuppyBatch {
 
     output:
     tuple val(id), file("${id}.fq")
-    tuple file("${id}.summary"), file("${id}.telemetry")
+    tuple file("${id}.summary"), file("${id}.telemetry"), file("${id}")
 
     """
     mkdir fast5_in
