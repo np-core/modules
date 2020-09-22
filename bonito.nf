@@ -37,7 +37,7 @@ process Bonito {
     fi
 
     bonito basecaller --device $params.bonito_device --fastq $params.bonito_model fast5_in > ${id}.fq
-    mv summary.tsv ${id}.summary
+    mv ${id}_summary.tsv ${id}.summary
     """
 
 }
@@ -63,7 +63,7 @@ process BonitoBatch {
     mv $path fast5_in
 
     bonito basecaller --device $params.bonito_device --fastq $params.bonito_model fast5_in > ${id}.fq
-    mv summary.tsv ${id}.summary
+    mv ${id}_summary.tsv ${id}.summary
     """
 
 }
