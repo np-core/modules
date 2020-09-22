@@ -35,7 +35,7 @@ process Bonito {
         exit 1
     fi
 
-    bonito basecaller --device $params.bonito_device --fastq $params.bonito_model fast5_in > ${id}.fq
+    bonito basecaller --device $params.bonito_device $params.bonito_params --fastq $params.bonito_model fast5_in > ${id}.fq
     mv ${id}_summary.tsv ${id}.summary
     """
 
@@ -61,7 +61,7 @@ process BonitoBatch {
     mkdir fast5_in
     mv $path fast5_in
 
-    bonito basecaller --device $params.bonito_device --fastq $params.bonito_model fast5_in > ${id}.fq
+    bonito basecaller --device $params.bonito_device $params.bonito_params --fastq $params.bonito_model fast5_in > ${id}.fq
     mv ${id}_summary.tsv ${id}.summary
     """
 
