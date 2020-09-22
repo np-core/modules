@@ -48,8 +48,8 @@ process BonitoBatch {
     tag { id }
     label "bonito"
 
-    publishDir "$params.outdir/guppy", mode: 'copy', pattern: "*.summary"
-    publishDir "$params.outdir/guppy", mode: 'copy', pattern: "*.fq"
+    publishDir "$params.outdir/bonito", mode: 'copy', pattern: "*.summary"
+    publishDir "$params.outdir/bonito", mode: 'copy', pattern: "*.fq"
 
     input:
     tuple val(id), file(path)
