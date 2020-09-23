@@ -11,9 +11,10 @@ process MegalodonVariants {
     tuple val(id), file(path)
 
     output:
-    file("${panel}_${barcode}")
+    file("${id}")
 
     """
+    mv $path megalodon_in
     megalodon --guppy-server-path $params.guppy_server_path \
             --output-directory ${id} \
             --outputs variants \
@@ -24,7 +25,7 @@ process MegalodonVariants {
             --processes $task.cpus \
             --guppy-params "$params.guppy_params" \
             --guppy-config "$params.guppy_config" \
-            $params.megalodon_params $path
+            $params.megalodon_params megalodon_in
     """
 
 }
