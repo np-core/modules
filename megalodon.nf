@@ -23,8 +23,8 @@ process MegalodonVariants {
             --variant-filename $candidates \
             --devices $params.gpu_devices \
             --processes $task.cpus \
-            --guppy-params "$params.guppy_params" \
-            --guppy-config "$params.guppy_config" \
+            --guppy-params '"$params.guppy_params"' \
+            --guppy-config '"$params.guppy_config"' \
             $params.megalodon_params megalodon_in
     """
 
