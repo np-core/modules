@@ -12,7 +12,7 @@
         file("tree.newick")
 
         """
-        raxml-ng --msa $alignment --model $params.tree_model --tree rand{10} --threads $task.cpus --prefix rax --force
+        raxml-ng --msa $alignment --model $params.raxml_model $params.raxml_params --threads $task.cpus --prefix rax --force
         mv rax.raxml.bestTree tree.newick
         """
 
