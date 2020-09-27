@@ -15,7 +15,7 @@ process Beast {
     tuple val(id), file("${id}.*")
 
     """
-    beast -threads $task.cpus ${beagle_params} ${params.beagle_order} ${params.beast_params} $xml
+    beast -threads $task.cpus ${beagle_params} ${params.beast_params} $xml
     """
 
 }
