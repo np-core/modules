@@ -3,7 +3,7 @@ process Qcat {
     tag { id }
     label "ont"
 
-    publishDir "$params.outdir/fastq", mode: "copy"
+    publishDir "$params.outdir/qcat", mode: "copy"
 
     input:
     tuple val(id), file(fq)
