@@ -12,7 +12,7 @@ process Beast {
     val(beagle_params)
 
     output:
-    tuple id, file("${id}.*")
+    tuple val(id), file("${id}.*")
 
     """
     beast -threads $task.cpus ${beagle_params} ${params.beagle_order} ${params.beast_params} $xml
