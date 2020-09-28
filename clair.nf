@@ -10,7 +10,7 @@ process ClairVariants {
     file(reference) 
 
     output:
-    tuple val(id), file("${id}.clair.vcf")
+    tuple val(id), file("${id}.vcf")
     tuple val(id), file(bam), file(bai)
 
     """
