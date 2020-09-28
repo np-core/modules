@@ -21,7 +21,7 @@ process MegalodonVariants {
             --reference $reference \
             --haploid \
             --variant-filename $candidates \
-            --devices $params.gpu_devices \
+            --devices '$params.guppy_devices' \
             --processes $task.cpus \
             --guppy-params '$params.guppy_params' \
             --guppy-config $params.guppy_config \
@@ -52,7 +52,7 @@ process MegalodonVariantsPanels {
             --reference $reference \
             --haploid \
             --variant-filename $candidates \
-            --devices $params.devices \
+            --devices '$params.guppy_devices' \
             --processes $task.cpus \
             --guppy-params "$params.guppy_params" \
             --guppy-config $params.guppy_config \
