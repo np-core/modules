@@ -3,7 +3,7 @@ process ClairVariants {
     label "clair"
     tag { "$id" }
 
-    publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.clair.vcf"
+    publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
 
     input:
     tuple val(id), file(bam), file(bai)
@@ -28,8 +28,8 @@ process ClairVariants {
                      --haploid_sensitive
     done
 
-    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.clair.vcf 
-    
+    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
+
     """
 
 }
