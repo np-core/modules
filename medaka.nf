@@ -17,3 +17,26 @@ process Medaka {
     """
 
 }
+
+process MedakaVariants {
+
+    label "medaka"
+    tag { "$id" }
+
+    publishDir "${params.outdir}/medaka", mode: "copy"
+
+    input:
+    tuple val(id), file(fastq)
+
+    output:
+    tuple val(id), file("${id}.vcf")
+    file("${id}.bam")
+
+    """
+    minimap2 -ax map-ont $reference $fastq | samtools sort | samtools view -Sb > ${id}.bam
+    samtools index ${id}.bam
+    medaka consensus --model $params.medaka_model --threads $task.cpus ${id}.bam ${id}.hdf
+    medaka snp --threshold 1 $reference ${id}.hdf ${id}.vcf
+    """
+
+}
