@@ -11,6 +11,7 @@ process ClairVariants {
 
     output:
     tuple val(id), file("${id}.clair.vcf")
+    tuple val(id), file(bam), file(bai)
 
     """
     samtools faidx $reference

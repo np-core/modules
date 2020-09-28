@@ -1,4 +1,4 @@
-process Minimap2ONT {
+process MinimapONT {
 
     label "minimap2"
     tag { "$id" }

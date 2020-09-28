@@ -27,9 +27,11 @@ process MedakaVariants {
 
     input:
     tuple val(id), file(bam), file(bai)
+    file(reference)
 
     output:
     tuple val(id), file("${id}.vcf")
+    tuple val(id), file(bam), file(bai)
 
     """
     medaka consensus --model $params.medaka_model --threads $task.cpus ${id}.bam ${id}.hdf
