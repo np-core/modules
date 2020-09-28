@@ -3,7 +3,7 @@ process MinimapONT {
     label "minimap2"
     tag { "$id" }
 
-    publishDir "${params.outdir}/medaka", mode: "copy"
+    publishDir "${params.outdir}/minimap2", mode: "symlink"
 
     input:
     tuple val(id), file(fastq)

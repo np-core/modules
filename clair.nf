@@ -3,7 +3,7 @@ process ClairVariants {
     label "clair"
     tag { "$id" }
 
-    publishDir "${params.outdir}/medaka", mode: "copy"
+    publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.clair.vcf"
 
     input:
     tuple val(id), file(bam), file(bai)
