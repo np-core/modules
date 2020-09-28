@@ -27,6 +27,7 @@ process MedakaVariants {
 
     input:
     tuple val(id), file(fastq)
+    file(reference)
 
     output:
     tuple val(id), file("${id}.vcf")
