@@ -3,7 +3,7 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/variants", mode: "symlink", pattern: "$id"
+        publishDir "${params.outdir}/snippy", mode: "symlink", pattern: "$id"
 
         input:
         tuple val(id), file(forward), file(reverse)
@@ -23,7 +23,7 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/variants", mode: "symlink", pattern: "$id"
+        publishDir "${params.outdir}/snippy", mode: "symlink", pattern: "$id"
 
         input:
         tuple val(id), file(fasta)
@@ -43,9 +43,9 @@
         label "snippy"
         tag { "SnippyCore" }
 
-        publishDir "${params.outdir}/alignment", mode: "copy", pattern: "snp.core.vcf"
-        publishDir "${params.outdir}/alignment", mode: "copy", pattern: "snp.core.fasta"
-        publishDir "${params.outdir}/alignment", mode: "symlink", pattern: "wgs.core.fasta"
+        publishDir "${params.outdir}/snippy_core", mode: "copy", pattern: "snp.core.vcf"
+        publishDir "${params.outdir}/snippy_core", mode: "copy", pattern: "snp.core.fasta"
+        publishDir "${params.outdir}/snippy_core", mode: "symlink", pattern: "wgs.core.fasta"
 
         input:
         file(snippy_outputs)  // collected list of snippy output directories
