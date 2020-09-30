@@ -4,13 +4,14 @@ process ClairVariants {
     tag { "$id" }
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
+    publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.txt"
 
     input:
     tuple val(id), file(bam), file(bai)
     file(reference) 
 
     output:
-    tuple val(id), file("${id}.vcf")
+    tuple val(id), file("${id}.vcf"), file("${id}.txt")
     tuple val(id), file(bam), file(bai)
 
     """
@@ -30,6 +31,8 @@ process ClairVariants {
 
     vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
 
+    pysamstats -t variation_strand $bam -f $reference > ${id}.txt
+    
     """
 
 }

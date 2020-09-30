@@ -23,19 +23,21 @@ process MedakaVariants {
     label "medaka"
     tag { "$id" }
 
-    publishDir "${params.outdir}/medaka", mode: "copy"
+    publishDir "${params.outdir}/medaka", mode: "copy", pattern: "${id}.vcf"
+    publishDir "${params.outdir}/medaka", mode: "copy", pattern: "${id}.txt"
 
     input:
     tuple val(id), file(bam), file(bai)
     file(reference)
 
     output:
-    tuple val(id), file("${id}.vcf")
+    tuple val(id), file("${id}.vcf"), file("${id}.txt")
     tuple val(id), file(bam), file(bai)
 
     """
     medaka consensus --model $params.medaka_model --threads $task.cpus ${id}.bam ${id}.hdf
     medaka snp --threshold 1 $reference ${id}.hdf ${id}.vcf
+    pysamstats -t variation_strand $bam -f $reference > ${id}.txt
     """
 
 }
