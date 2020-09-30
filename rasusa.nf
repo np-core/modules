@@ -1,7 +1,7 @@
 process Rasusa {
     
     tag { id }
-    label "ont"
+    label "rasusa"
 
     publishDir "$params.outdir/rasusa", mode: "copy"
 
@@ -19,8 +19,8 @@ process Rasusa {
 
 process RasusaMulti {
     
-    tag { "$id (${coverage}x)" }
-    label "ont"
+    tag { "${id}: ${coverage}x" }
+    label "rasusa"
 
     publishDir "$params.outdir/rasusa", mode: "copy"
 
