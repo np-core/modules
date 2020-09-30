@@ -3,7 +3,7 @@ process Rasusa {
     tag { id }
     label "ont"
 
-    publishDir "$params.outdir/ont/qc", mode: "copy"
+    publishDir "$params.outdir/rasusa", mode: "copy"
 
     input:
     tuple val(id), file(fq)
@@ -23,4 +23,23 @@ process Rasusa {
         cp $fq ${id}.rasusa.fq
         """
 
+}
+
+process RasusaMulti {
+    
+    tag { id }
+    label "ont"
+
+    publishDir "$params.outdir/rasusa", mode: "copy"
+
+    input:
+    tuple val(id), file(fq)
+    each val(coverage)
+
+    output:
+    tuple val(id), file("${id}_${coverage}.fq")
+    
+    """
+    rasusa -c $coverage -g $params.genome_size -i $fq > ${id}_${coverage}.fq
+    """
 }
