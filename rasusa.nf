@@ -29,7 +29,7 @@ process RasusaMulti {
     each coverage
 
     output:
-    tuple val(id), file("${id}_${coverage}.fq")
+    tuple val("${id}_${coverage}"), file("${id}_${coverage}.fq")
     
     """
     rasusa -c $coverage -g $params.genome_size -i $fq > ${id}_${coverage}.fq
