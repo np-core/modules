@@ -34,7 +34,7 @@ process RasusaMulti {
 
     input:
     tuple val(id), file(fq)
-    each val(coverage)
+    each coverage
 
     output:
     tuple val(id), file("${id}_${coverage}.fq")
