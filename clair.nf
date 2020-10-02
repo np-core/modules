@@ -31,7 +31,7 @@ process ClairVariants {
                      --threads $task.cpus \
                      --call_fn ${id}.\${contig}.clair.vcf \
                      --ctgName \$contig \
-                     --haploid_sensitive
+                     ${params.clair_haploid}
     done
 
     vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
