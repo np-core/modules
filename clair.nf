@@ -5,7 +5,7 @@ process ClairVariants {
     
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
