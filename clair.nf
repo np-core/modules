@@ -1,12 +1,12 @@
 process ClairVariants {
 
+    label "clair"
+    tag { "$id" }
+    
     memory { 4.GB * task.attempt }
 
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
-
-    label "clair"
-    tag { "$id" }
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.txt"
