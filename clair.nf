@@ -3,7 +3,7 @@ process ClairVariants {
     label "clair"
     tag { "$id" }
     
-    memory { 4.GB * task.attempt }
+    memory { 8.GB * task.attempt }
 
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
