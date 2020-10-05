@@ -41,3 +41,27 @@ process MedakaVariants {
     """
 
 }
+
+process MedakaVariantsTraining {
+
+    label "medaka"
+    tag { "$model_name" }
+
+    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "*.vcf"
+    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "*.txt"
+
+    input:
+    tuple val(model_name), val(coverage), val(ids), file(reference), file("bams/*"), file("bams/*")
+
+    output:
+    tuple val(model_name), file("*.vcf"), file("*.txt")
+
+    """
+    for i in $ids; do
+        medaka consensus --model $params.medaka_model --threads $task.cpus bams/\${i}_${coverage}.bam \${i}_${coverage}.hdf
+        medaka snp --threshold 1 $reference \${i}_${coverage}.hdf \${i}_${coverage}.vcf
+        pysamstats -t variation_strand bams/\${i}_${coverage}.bam -f $reference > \${i}_${coverage}.txt
+    done
+    """
+
+}
