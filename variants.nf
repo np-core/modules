@@ -13,10 +13,10 @@ process EvaluateRandomForest {
     tuple val(id), file("${id}_${model}_application_truth.tsv"), file("${id}_${model}_classifier_truth.tsv"), file("${id}_${model}_${params.eval_caller}_truth.tsv")
 
     """
-    np variants forest-evaluate --prefix ${id}_${model} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
-    mv ${id}_eval/evaluation/${id}_${model}_application_truth.tsv .
-    mv ${id}_eval/evaluation/${id}_${model}_classifier_truth.tsv .
-    mv ${id}_eval/evaluation/${id}_${model}_${params.eval_caller}_truth.tsv ${id}_${model}_caller_truth.tsv
+    np variants forest-evaluate --prefix ${id}_${model.baseName} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
+    mv ${id}_eval/evaluation/${id}_${model.baseName}_application_truth.tsv .
+    mv ${id}_eval/evaluation/${id}_${model.baseName}_classifier_truth.tsv .
+    mv ${id}_eval/evaluation/${id}_${model.baseName}_${params.eval_caller}_truth.tsv ${id}_${model.baseName}_caller_truth.tsv
     """
 
 }
