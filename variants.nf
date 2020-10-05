@@ -10,7 +10,7 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple val(id), file("${id}_${model.baseName}_application_truth.tsv"), file("${id}_${model.baseName}_classifier_truth.tsv"), file("${id}_${model.baseName}_caller_truth.tsv")
+    tuple file("${id}_${model.baseName}_application_truth.tsv"), file("${id}_${model.baseName}_classifier_truth.tsv"), file("${id}_${model.baseName}_caller_truth.tsv")
 
     """
     np variants forest-evaluate --prefix ${id}_${model.baseName} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
@@ -32,7 +32,7 @@ process ProcessRandomForestEvalutions {
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_caller_evaluation.tsv"
 
     input:
-    tuple val(id), file(app_truth), file(class_truth), file(base_truth)
+    file(collected)
 
     output:
     file("*_evaluation.tsv")
