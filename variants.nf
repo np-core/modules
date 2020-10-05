@@ -10,13 +10,13 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple file("${id}_${model.baseName}_application_truth.tsv"), file("${id}_${model.baseName}_classifier_truth.tsv"), file("${id}_${model.baseName}_caller_truth.tsv")
+    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.caller.truth.tsv")
 
     """
-    np variants forest-evaluate --prefix ${id}_${model.baseName} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
-    mv ${id}_eval/evaluation/${id}_${model.baseName}_application_truth.tsv .
-    mv ${id}_eval/evaluation/${id}_${model.baseName}_classifier_truth.tsv .
-    mv ${id}_eval/evaluation/${id}_${model.baseName}_${params.eval_caller}_truth.tsv ${id}_${model.baseName}_caller_truth.tsv
+    np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
+    mv ${id}_eval/evaluation/${id}_${model.simpleName}_application_truth.tsv ${id}.${model.simpleName}.application.truth.tsv
+    mv ${id}_eval/evaluation/${id}_${model.simpleName}_classifier_truth.tsv ${id}.${model.simpleName}.classifier.truth.tsv
+    mv ${id}_eval/evaluation/${id}_${model.simpleName}_${params.eval_caller}_truth.tsv ${id}.${model.simpleName}.caller.truth.tsv
     """
 
 }
@@ -29,7 +29,7 @@ process ProcessRandomForestEvaluations {
 
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_application_evaluation.tsv"
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
-    publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_caller_evaluation.tsv"
+    publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_${params.eval_caller}_evaluation.tsv"
 
     input:
     file(collected)
@@ -38,9 +38,9 @@ process ProcessRandomForestEvaluations {
     file("*_evaluation.tsv")
 
     """
-    np utils combine-df --dir . --glob "*_application_truth.tsv" --extract "_application_truth.tsv" --extract_split "_" --extract_head "id,model" --output rff_application_evaluation.tsv
-    np utils combine-df --dir . --glob "*_classifier_truth.tsv" --extract "_classifier_truth.tsv" --extract_split "_" --extract_head "id,model" --output rff_classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*_caller_truth.tsv" --extract "_caller_truth.tsv" --extract_split "_" --extract_head "id,model" --output rff_${params.eval_caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_application_evaluation.tsv
+    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_classfier_evaluation.tsv
+    np utils combine-df --dir . --glob "*.caller.truth.tsv" --extract ".caller.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_${params.eval_caller}_evaluation.tsv
     """
 
 
