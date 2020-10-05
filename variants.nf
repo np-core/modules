@@ -43,5 +43,25 @@ process ProcessRandomForestEvaluations {
     np utils combine-df --dir . --glob "*.caller.truth.tsv" --extract ".caller.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_${params.eval_caller}_evaluation.tsv
     """
 
+}
+
+
+process TrainRandomForest {
+
+    label "forest_training"
+    tag { "$id" }
+
+    publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "*.sav"
+
+    input:
+    tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
+
+    output:
+    file("*.sav")
+
+    """
+    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.train_caller} --test_size ${params.test_size} --outdir trained
+    mv trained/model/*.sav .
+    """
 
 }
