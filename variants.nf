@@ -7,7 +7,7 @@ process EvaluateRandomForest {
 
     input:
     tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
-    each model
+    each file(model)
 
     output:
     tuple val(id), file("${id}_${model}_application_truth.tsv"), file("${id}_${model}_classifier_truth.tsv"), file("${id}_${model}_${params.eval_caller}_truth.tsv")
