@@ -6,14 +6,14 @@ process EvaluateRandomForest {
     publishDir "${params.outdir}/forest/evaluation", mode: "copy", pattern: "*.tsv"
 
     input:
-    tuple val(id), file(snippy_vcf), file(ont_vcf), file(ont_stats)
+    tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
     each model
 
     output:
     tuple val(id), file("${id}_${model}_application_truth.tsv"), file("${id}_${model}_classifier_truth.tsv"), file("${id}_${model}_${params.eval_caller}_truth.tsv")
 
     """
-    np variants forest-evaluate --prefix ${id}_${model} --snippy_vcf $snippy_vcf --ont_vcf $ont_vcf --ont_stats $ont_stats --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
+    np variants forest-evaluate --prefix ${id}_${model} --snippy_dir snippy/ --ont_dir ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
     mv ${id}_eval/evaluation/${id}_${model}_application_truth.tsv .
     mv ${id}_eval/evaluation/${id}_${model}_classifier_truth.tsv .
     mv ${id}_eval/evaluation/${id}_${model}_${params.eval_caller}_truth.tsv ${id}_${model}_caller_truth.tsv
