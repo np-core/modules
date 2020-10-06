@@ -25,9 +25,9 @@ process MinimapMultiTraining {
     tag { "$model_name" }
 
     publishDir "${params.outdir}/minimap2/${model_name}/${reference.baseName}", mode: "symlink"
-
+ 
     input:
-    tuple val(model_name), val(coverage), val(id), file(fq_cov), file(snippy_vcf)
+    tuple val(model_name), val(id), val(coverage), file(fq_cov), file(snippy_vcf)
     each file(reference)
 
     output:
