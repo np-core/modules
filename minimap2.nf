@@ -27,18 +27,15 @@ process MinimapMultiTraining {
     publishDir "${params.outdir}/minimap2/${model_name}/${reference.baseName}", mode: "symlink"
 
     input:
-    tuple val(model_name), val(coverage), val(ids), file("ont_subset/*")
+    tuple val(model_name), val(coverage), val(id), file(fq_cov), file(snippy_vcf)
     each file(reference)
 
     output:
-    tuple val(model_name), val(coverage), val(ids), file(reference), file("*.bam"), file("*.bam.bai")
+    tuple val(model_name), val(coverage), val(id), file(reference), file("${id}_${coverage}.bam"), file("${id}_${coverage}.bam.bai"), file(snippy_vcf)
 
     """
-    for i in $ids; do
-        echo \${i}_${coverage}
-        minimap2 -t $task.cpus -ax map-ont $reference ont_subset/\${i}_${coverage}.fq | samtools sort | samtools view -Sb > \${i}_${coverage}.bam
-        samtools index \${i}_${coverage}.bam
-    done
+    minimap2 -t $task.cpus -ax map-ont $reference $fq_cov | samtools sort | samtools view -Sb > ${id}_${coverage}.bam
+    samtools index ${id}_${coverage}.bam
     """
 
 }

@@ -38,21 +38,19 @@ process RasusaMulti {
 
 process RasusaMultiTraining {
     
-    tag { "${model_name}: ${coverage}x" }
+    tag { "${id} - ${model_name}: ${coverage}x" }
     label "rasusa"
 
     publishDir "$params.outdir/rasusa", mode: "copy"
 
     input:
-    tuple val(model_name), val(ids), file("ont/*")
+    tuple val(model_name), val(id), file(fq), file(snippy_vcf)
     each coverage
 
     output:
-    tuple val(model_name), val(ids), file("snippy/*"), file("*.fq")
+    tuple val(model_name), val(id), file("${id}_${coverage}.fq"), file(snippy_vcf)
     
     """
-    for i in $ids; do
-        rasusa -c $coverage -g $params.genome_size -i ont/\${i}.* > \${i}_${coverage}.fq
-    done
+    rasusa -c $coverage -g $params.genome_size -i $fq > ${id}_${coverage}.fq
     """
 }

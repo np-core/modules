@@ -45,23 +45,21 @@ process MedakaVariants {
 process MedakaVariantsTraining {
 
     label "medaka"
-    tag { "$model_name" }
+    tag { "$model_name - $id - $reference" }
 
-    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "*.vcf"
-    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "*.txt"
+    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "${id}_${coverage}.vcf"
+    publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "${id}_${coverage}.txt"
 
     input:
-    tuple val(model_name), val(coverage), val(ids), file(reference), file("bams/*"), file("bams/*")
+    tuple val(model_name), val(coverage), val(id), file(reference), file(bam), file(bai), file(snippy_vcf)
 
     output:
-    tuple val(model_name), file("*.vcf"), file("*.txt")
+    tuple val(model_name), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
 
     """
-    for i in $ids; do
-        medaka consensus --model $params.medaka_model --threads $task.cpus bams/\${i}_${coverage}.bam \${i}_${coverage}.hdf
-        medaka snp --threshold 1 $reference \${i}_${coverage}.hdf \${i}_${coverage}.vcf
-        pysamstats -t variation_strand bams/\${i}_${coverage}.bam -f $reference > \${i}_${coverage}.txt
-    done
+    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}_${coverage}.hdf
+    medaka snp --threshold 1 $reference ${id}_${coverage}.hdf ${id}_${coverage}.vcf
+    pysamstats -t variation_strand $bam -f $reference > ${id}_${coverage}.txt
     """
 
 }
