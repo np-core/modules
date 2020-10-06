@@ -48,9 +48,10 @@ process RasusaMultiTraining {
     each coverage
 
     output:
-    tuple val(model_name), val(id), val(coverage), file("${id}_${coverage}.fq"), file(snippy_vcf)
+    tuple val(model_name), val(id), val(coverage), file("${id}_${coverage}.fq"), file("${id}_${coverage}.ref.vcf")
     
     """
     rasusa -c $coverage -g $params.genome_size -i $fq > ${id}_${coverage}.fq
+    cp $snippy_vcf ${id}_${coverage}.ref.vcf
     """
 }
