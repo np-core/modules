@@ -60,7 +60,7 @@ process TrainRandomForest {
     file("*.sav")
 
     """
-    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.train_caller} --test_size ${params.test_size} --outdir trained
+    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --test_size ${params.test_size} --outdir trained
     mv trained/model/*.sav .
     """
 
