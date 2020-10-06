@@ -51,17 +51,16 @@ process TrainRandomForest {
     label "forest_training"
     tag { "$model_name" }
 
-    publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "*.sav"
+    publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "${model_name}_${reference_name}_model"
 
     input:
-    tuple val(model_name), file("ont/*"), file("ont/*"), file("snippy/*")
+    tuple val(model_name), val(reference_name), file("ont/*"), file("ont/*"), file("snippy/*")
 
     output:
     file("*.sav")
 
     """
-    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --test_size ${params.test_size} --outdir trained
-    mv trained/model/*.sav .
+    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model_name}_${reference_name} --test_size ${params.test_size} --outdir ${model_name}_${reference_name}_model
     """
 
 }
