@@ -54,7 +54,7 @@ process TrainRandomForest {
     publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "*.sav"
 
     input:
-    tuple val(model_name), file("ont/*"), file("ont/*"), file("snippy/*")
+    tuple val(model_name), file("ont/*"), file("ont/*"), file("*")
 
     output:
     file("*.sav")
