@@ -49,7 +49,7 @@ process ProcessRandomForestEvaluations {
 process TrainRandomForest {
 
     label "forest_training"
-    tag { "$id" }
+    tag { "$model_name" }
 
     publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "*.sav"
 
