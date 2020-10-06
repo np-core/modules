@@ -31,7 +31,7 @@ process MinimapMultiTraining {
     each file(reference)
 
     output:
-    tuple val(model_name), val(coverage), val(id), file(reference), file("${id}_${coverage}.bam"), file("${id}_${coverage}.bam.bai"), file(snippy_vcf)
+    tuple val(model_name), val(id), val(coverage), file(reference), file("${id}_${coverage}.bam"), file("${id}_${coverage}.bam.bai"), file(snippy_vcf)
 
     """
     minimap2 -t $task.cpus -ax map-ont $reference $fq_cov | samtools sort | samtools view -Sb > ${id}_${coverage}.bam

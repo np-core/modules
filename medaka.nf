@@ -51,7 +51,7 @@ process MedakaVariantsTraining {
     publishDir "${params.outdir}/medaka/${model_name}/${reference.baseName}", mode: "copy", pattern: "${id}_${coverage}.txt"
 
     input:
-    tuple val(model_name), val(coverage), val(id), file(reference), file(bam), file(bai), file(snippy_vcf)
+    tuple val(model_name), val(id), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
 
     output:
     tuple val(model_name), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
