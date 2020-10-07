@@ -40,7 +40,7 @@ process ProcessRandomForestEvaluations {
     """
     np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_application_evaluation.tsv
     np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*.caller.truth.tsv" --extract ".caller.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_${params.eval_caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*.caller.truth.tsv" --extract ".caller.truth.tsv" --extract_split "." --extract_head "id,model" --clean --output rff_${params.eval_caller}_evaluation.tsv
     """
 
 }
