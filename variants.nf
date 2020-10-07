@@ -57,7 +57,7 @@ process TrainRandomForest {
     tuple val(model_name), val(reference_name), file("ont/*"), file("ont/*"), file("snippy/*")
 
     output:
-    file("*.sav")
+    file("${model_name}_${reference_name}_model/")
 
     """
     np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model_name}_${reference_name} --test_size ${params.test_size} --outdir ${model_name}_${reference_name}_model
