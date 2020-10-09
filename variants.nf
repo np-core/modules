@@ -27,6 +27,11 @@ process ProcessRandomForestEvaluations {
     label "forest_evaluate"
     tag { "$id" }
 
+    memory { params.forest_evaluate_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    maxRetries 3
+
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_application_evaluation.tsv"
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
     publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_${params.eval_caller}_evaluation.tsv"
@@ -50,6 +55,11 @@ process TrainRandomForest {
 
     label "forest_training"
     tag { "$model_name" }
+
+    memory { params.forest_train_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    maxRetries 3
 
     publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "${model_name}_${reference_name}_model"
 
