@@ -1,7 +1,7 @@
 process Kraken {
 
     tag { id }
-    label "kraken"
+    label "kraken2"
 
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.kraken"
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.bracken"
@@ -25,7 +25,7 @@ process Kraken {
 process KrakenOnline {
 
     tag { "Batch $batch - $db" }
-    label "kraken"
+    label "kraken2"
 
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.kraken"
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.bracken"
@@ -48,7 +48,7 @@ process KrakenOnline {
 process KrakenAssemblyOnline {
 
     tag { "Batch $batch - $db" }
-    label "kraken"
+    label "kraken2"
 
     publishDir "$params.outdir/assembly/kraken/$db", mode: "copy", pattern: "*.kraken"
     publishDir "$params.outdir/assembly/kraken/$db", mode: "copy", pattern: "*.bracken"
@@ -72,7 +72,7 @@ process KrakenAssemblyOnline {
 process KrakenIllumina {
 
     tag { id }
-    label "kraken"
+    label "kraken2"
 
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.kraken"
     publishDir "$params.outdir/kraken/$db", mode: "copy", pattern: "*.bracken"
