@@ -12,7 +12,7 @@ process Medaka {
     tuple val(id), file("${id}.medaka.fasta")
     
     """ 
-    medaka_consensus -i $fastq -d $racon_assembly -o racon_medaka -t $task.cpus -m $params.medaka_model
+    medaka consensus -i $fastq -d $racon_assembly -o racon_medaka -t $task.cpus -m $params.medaka_model
     mv racon_medaka/consensus.fasta ${id}.medaka.fasta
     """
 
