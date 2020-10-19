@@ -26,7 +26,7 @@ process Nanoq {
 
 process NanoqStatistics {
     
-    // Fast variant to compuute statistics only
+    // Fast variant to compute statistics only
 
     tag { id }
     label "nanoq"
@@ -42,9 +42,9 @@ process NanoqStatistics {
     """
     if [[ $fq == *.gz ]]
     then
-        zcat $fq | nanoq -l $params.length -q $params.quality > /dev/null 2> ${id}.stats.txt
+        zcat $fq | nanoq -l 0 -q 0 > /dev/null 2> ${id}.stats.txt
     else
-        nanoq -f $fq -l $params.length -q $params.quality > /dev/null 2> ${id}.stats.txt
+        nanoq -f $fq -l 0 -q 0 > /dev/null 2> ${id}.stats.txt
     fi
     """
 
