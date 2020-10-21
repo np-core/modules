@@ -6,7 +6,7 @@ process EvaluateRandomForest {
     memory { params.forest_evaluate_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
-    maxRetries 3
+    maxRetries 5
 
     publishDir "${params.outdir}/forest/evaluation", mode: "copy", pattern: "*.tsv"
 
