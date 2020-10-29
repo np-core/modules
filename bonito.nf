@@ -17,26 +17,19 @@ process Bonito {
     file("${id}.summary")
 
     """
-
     if [[ -f $path ]]; then
-        # if the path variable is a single file
         if [[ ($path == *.tar.gz) || ($path == *.tar) ]]; then
-            # if it is archived, recursive search
-            echo "Archived directory: $path"
-            mkdir fast5_in && mkdir extracted
-            tar -xf $path -C extracted
-            find extracted -type f -name '*.fast5' -print0 | xargs -r0 mv -t fast5_in 
+            # if it is archived
+            mkdir fast5_in
+            tar -xf $path -C fast5_in
         else
             # if it is a single file
-            echo "Single file: $path"
             mkdir fast5_in
             mv $path fast5_in
         fi
     elif [[ -d $path ]]; then
-        # if the path variable is a single directory, recursive search
-        echo "Single directory: $path"
-        mkdir fast5_in
-        find $path -type f -name '*.fast5' -print0 | xargs -r0 mv -t fast5_in 
+        # if the path variable is a single directory
+        mv $path fast5_in
     else
         echo "Error in parsing input"
         exit 1
