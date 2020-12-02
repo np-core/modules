@@ -73,18 +73,18 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${refname}/snippy", mode: "symlink", pattern: "$id"
+        publishDir "${params.outdir}/${ref}/polishers/snippy", mode: "symlink", pattern: "${id}_snippy/${id}.vcf"
 
         input:
         tuple val(model), val(id), file(ont), file(forward), file(reverse)
         each file(reference)
 
         output:
-        tuple val(model), val(id), val(refname), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
+        tuple val(model), val(id), val(ref), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
 
         script:
 
-        refname = reference.simpleName
+        ref = reference.simpleName
 
         """
         snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params

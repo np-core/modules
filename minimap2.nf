@@ -24,14 +24,13 @@ process MinimapMultiTraining {
     label "minimap2"
     tag { "$model_name" }
 
-    publishDir "${params.outdir}/minimap2/${model_name}/${reference.baseName}", mode: "symlink"
+    publishDir "${params.outdir}/${ref}/polishers/alignments", mode: "symlink"
  
     input:
-    tuple val(model_name), val(id), val(coverage), file(fq_cov), file(snippy_vcf)
-    each file(reference)
+    tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(fq_cov), file(snippy_vcf)
 
     output:
-    tuple val(model_name), val(id), val(coverage), file(reference), file("${id}_${coverage}.bam"), file("${id}_${coverage}.bam.bai"), file(snippy_vcf)
+    tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file("${id}_${coverage}.bam"), file("${id}_${coverage}.bam.bai"), file(snippy_vcf)
 
     """
     minimap2 -t $task.cpus -ax map-ont $reference $fq_cov | samtools sort | samtools view -Sb > ${id}_${coverage}.bam

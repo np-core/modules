@@ -52,14 +52,14 @@ process ClairVariantsTraining {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/clair/${model_name}/${reference.baseName}", mode: "copy", pattern: "${id}_${coverage}.vcf"
-    publishDir "${params.outdir}/clair/${model_name}/${reference.baseName}", mode: "copy", pattern: "${id}_${coverage}.txt"
+    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${coverage}.vcf"
+    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${coverage}.txt"
 
     input:
-    tuple val(model_name), val(id), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
+    tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
 
     output:
-    tuple val(model_name), val("${reference.baseName}"), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
+    tuple val(model_name), val(id), val(ref), val(coverage), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
 
 
     """
