@@ -64,3 +64,30 @@
         """
 
     }
+
+
+    process TrainingReferenceSnippy {
+        
+        // Calls the reference VCF from Illumina PE reads (reference) in training collections
+
+        label "snippy"
+        tag { id }
+
+        publishDir "${params.outdir}/${refname}/snippy", mode: "symlink", pattern: "$id"
+
+        input:
+        tuple val(model), val(id), file(ont), file(forward), file(reverse)
+        each file(reference)
+
+        output:
+        tuple val(model), val(id), val(refname), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
+
+        script:
+
+        refname = reference.simpleName
+
+        """
+        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
+        """
+
+    }
