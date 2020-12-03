@@ -91,3 +91,26 @@
         """
 
     }
+
+    process SnippyEvaluation {
+        
+        // Calls the reference VCF from Illumina PE reads (reference) in training collections
+
+        label "snippy"
+        tag { id }
+
+        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "symlink", pattern: "${id}_snippy/${id}.vcf"
+
+        input:
+        tuple val(id), file(forward), file(reverse), file(ont)
+        each file(reference)
+
+        output:
+        tuple val(id), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
+
+
+        """
+        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 ${id}_1_qc.fq.gz --R2 ${id}_2_qc.fq.gz $params.snippy_params
+        """
+
+    }

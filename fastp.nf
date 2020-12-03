@@ -31,3 +31,20 @@ process FastpTraining {
     """
 
 }
+
+process FastpEvaluation {
+
+    label "fastp"
+    tag { id }
+
+    input:
+    tuple val(id), file(forward), file(reverse), file(ont)
+
+    output:
+    tuple val(id), file("${id}_1_qc.fq.gz"), file("${id}_2_qc.fq.gz"), file(ont)
+
+    """
+    fastp --in1 $forward --in2 $reverse --out1 ${id}_1_qc.fq.gz --out2 ${id}_2_qc.fq.gz --thread $task.cpus
+    """
+
+}

@@ -65,6 +65,7 @@ process RandomForestTraining {
 
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.composite.sav"
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.qual.sav"
+    publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}_model"
 
     input:
     tuple val(model), val(ref), file(reference), file("ont/*"), file("ont/*"), file("snippy/*")
@@ -74,8 +75,9 @@ process RandomForestTraining {
 
     """
     np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model}_${ref} --test_size ${params.test_size} --outdir model
-    mv model/training/${model}_${ref}.composite.sav ${model}_${ref}.composite.sav 
-    mv model/training/${model}_${ref}.qual.sav ${model}_${ref}.qual.sav 
+    mv model/models/${model}_${ref}.composite.sav ${model}_${ref}.composite.sav 
+    mv model/models/${model}_${ref}.qual.sav ${model}_${ref}.qual.sav 
+    mv model/trainig ${model}_${ref}_model
     """
 
 }
