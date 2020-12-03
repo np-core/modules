@@ -87,7 +87,6 @@
         ref = reference.simpleName
 
         """
-        fastp -i $forward -I $reverse -o ${id}_1_qc.fq.gz -O ${id}_2_qc.fq.gz --thread $task.cpus
         snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 ${id}_1_qc.fq.gz --R2 ${id}_2_qc.fq.gz $params.snippy_params
         """
 

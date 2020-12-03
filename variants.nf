@@ -63,20 +63,17 @@ process TrainRandomForest {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "model/${model}_${ref}.composite.sav"
+    publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.composite.sav"
 
     input:
     tuple val(model), val(ref), file("ont/*"), file("ont/*"), file("snippy/*")
 
     output:
-    file("model/${model}_${ref}.composite.sav")
-
-    script:
-
-    println(model, ref)
+    file("${model}_${ref}.composite.sav")
 
     """
     np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model}_${ref} --test_size ${params.test_size} --outdir model
+    mv model/training/${model}_${ref}.composite.sav ${model}_${ref}.composite.sav 
     """
 
 }
