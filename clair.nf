@@ -59,7 +59,7 @@ process ClairTraining {
     tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
 
     output:
-    tuple val(model_name), val(ref), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
+    tuple val(model_name), val(ref), file(reference), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
 
 
     """
