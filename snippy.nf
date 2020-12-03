@@ -76,7 +76,7 @@
         publishDir "${params.outdir}/${ref}/polishers/snippy", mode: "symlink", pattern: "${id}_snippy/${id}.vcf"
 
         input:
-        tuple val(model), val(id), file(ont), file(forward), file(reverse)
+        tuple val(model), val(id), file(forward), file(reverse), file(ont)
         each file(reference)
 
         output:

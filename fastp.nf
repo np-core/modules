@@ -21,13 +21,13 @@ process FastpTraining {
     tag { id }
 
     input:
-    tuple val(model), val(id), file(ont), file(forward), file(reverse)
+    tuple val(model), val(id), file(forward), file(reverse), file(ont)
 
     output:
-    tuple val(model), val(id), file(ont), file("${id}_1_qc.fq.gz"), file("${id}_2_qc.fq.gz")
+    tuple val(model), val(id), file("${id}_1_qc.fq.gz"), file("${id}_2_qc.fq.gz"), file(ont)
 
     """
-    fastp -i $forward -I $reverse -o ${id}_1_qc.fq.gz -O ${id}_2_qc.fq.gz --thread $task.cpus
+    fastp --in1 $forward --in2 $reverse --out1 ${id}_1_qc.fq.gz --out2 ${id}_2_qc.fq.gz --thread $task.cpus
     """
 
 }
