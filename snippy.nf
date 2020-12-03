@@ -66,7 +66,7 @@
     }
 
 
-    process ModelReferenceVariants {
+    process SnippyTraining {
         
         // Calls the reference VCF from Illumina PE reads (reference) in training collections
 
