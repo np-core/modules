@@ -77,7 +77,7 @@ process RandomForestTraining {
     np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model}_${ref} --test_size ${params.test_size} --outdir model
     mv model/models/${model}_${ref}.composite.sav ${model}_${ref}.composite.sav 
     mv model/models/${model}_${ref}.qual.sav ${model}_${ref}.qual.sav 
-    mv model/trainig ${model}_${ref}_model
+    mv model/training ${model}_${ref}_model
     """
 
 }
