@@ -53,7 +53,7 @@ process ProcessRandomForestEvaluations {
 }
 
 
-process TrainRandomForest {
+process RandomForestTraining {
 
     label "forest_training"
     tag { "$model - $ref - Composite RFC" }
