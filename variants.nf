@@ -8,20 +8,17 @@ process EvaluateRandomForest {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 5
 
-    publishDir "${params.outdir}/forest/evaluation", mode: "copy", pattern: "*.tsv"
+    publishDir "${params.outdir}/evaluation", mode: "copy", pattern: "*.tsv"
 
     input:
     tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
     each file(model)
 
     output:
-    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.caller.truth.tsv")
+    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.raw.truth.tsv")
 
     """
-    np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --outdir ${id}_eval --mask_weak $params.eval_mask_weak --caller $params.eval_caller
-    mv ${id}_eval/evaluation/${id}_${model.simpleName}_application_truth.tsv ${id}.${model.simpleName}.application.truth.tsv
-    mv ${id}_eval/evaluation/${id}_${model.simpleName}_classifier_truth.tsv ${id}.${model.simpleName}.classifier.truth.tsv
-    mv ${id}_eval/evaluation/${id}_${model.simpleName}_${params.eval_caller}_truth.tsv ${id}.${model.simpleName}.caller.truth.tsv
+    np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
     """
 
 }
@@ -59,23 +56,27 @@ process ProcessRandomForestEvaluations {
 process TrainRandomForest {
 
     label "forest_training"
-    tag { "$model_name" }
+    tag { "$model - $ref - Composite RFC" }
 
     memory { params.forest_train_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/forest/training", mode: "copy", pattern: "${model_name}_${reference_name}_model"
+    publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "model/${model}_${ref}.composite.sav"
 
     input:
-    tuple val(model_name), val(reference_name), file("ont/*"), file("ont/*"), file("snippy/*")
+    tuple val(model), val(ref), file("ont/*"), file("ont/*"), file("snippy/*")
 
     output:
-    file("${model_name}_${reference_name}_model/")
+    file("model/${model}_${ref}.composite.sav")
+
+    script:
+
+    println(model, ref)
 
     """
-    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model_name}_${reference_name} --test_size ${params.test_size} --outdir ${model_name}_${reference_name}_model
+    np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model}_${ref} --test_size ${params.test_size} --outdir model
     """
 
 }
