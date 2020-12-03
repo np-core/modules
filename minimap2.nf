@@ -19,10 +19,10 @@ process MinimapONT {
 
 }
 
-process MinimapMultiTraining {
+process MinimapTraining {
 
     label "minimap2"
-    tag { "$model_name" }
+    tag { "$model_name - $id - $reference" }
 
     publishDir "${params.outdir}/${ref}/polishers/alignments", mode: "symlink"
  

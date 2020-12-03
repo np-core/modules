@@ -36,7 +36,7 @@ process RasusaMulti {
     """
 }
 
-process RasusaMultiTraining {
+process RasusaTraining {
     
     tag { "${id} - ${model_name}: ${coverage}x" }
     label "rasusa"

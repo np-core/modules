@@ -42,7 +42,7 @@ process ClairVariants {
 
 }
 
-process ClairVariantsTraining {
+process ClairTraining {
 
     label "clair"
     tag { "$model_name - $id - $reference" }

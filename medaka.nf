@@ -42,7 +42,7 @@ process MedakaVariants {
 
 }
 
-process MedakaVariantsTraining {
+process MedakaTraining {
 
     label "medaka"
     tag { "$model_name - $id - $reference" }

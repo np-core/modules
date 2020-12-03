@@ -66,7 +66,7 @@
     }
 
 
-    process TrainingReferenceSnippy {
+    process SnippyModelReference {
         
         // Calls the reference VCF from Illumina PE reads (reference) in training collections
 
@@ -87,7 +87,8 @@
         ref = reference.simpleName
 
         """
-        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
+        fastp -i $forward -I $reverse -o ${id}_1_qc.fq.gz -O ${id}_2_qc.fq.gz --thread $task.cpus
+        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 ${id}_1_qc.fq.gz --R2 ${id}_2_qc.fq.gz $params.snippy_params
         """
 
     }
