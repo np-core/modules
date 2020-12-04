@@ -38,7 +38,7 @@ process RasusaMulti {
 
 process RasusaTraining {
     
-    tag { "${id} - ${model_name}: ${coverage}x" }
+    tag { "${model_name} - ${id} - ${coverage}x" }
     label "rasusa"
 
     publishDir "$params.outdir/${ref}/polishers/subsets", mode: "copy"

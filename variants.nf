@@ -8,7 +8,7 @@ process EvaluateRandomForest {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 5
 
-    publishDir "${params.outdir}/evaluation", mode: "copy", pattern: "*.tsv"
+    publishDir "${params.outdir}/evaluations/data", mode: "copy", pattern: "*.tsv"
 
     input:
     tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
@@ -34,9 +34,9 @@ process ProcessRandomForestEvaluations {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_application_evaluation.tsv"
-    publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
-    publishDir "${params.outdir}/forest", mode: "copy", pattern: "rff_${params.eval_caller}_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_application_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations/classifier", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations/raw", mode: "copy", pattern: "rff_${params.eval_caller}_evaluation.tsv"
 
     input:
     file(collected)
@@ -65,7 +65,7 @@ process RandomForestTraining {
 
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.composite.sav"
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.qual.sav"
-    publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}_model"
+    publishDir "${params.outdir}/${ref}/polishers/models/data", mode: "copy", pattern: "${model}_${ref}_model"
 
     input:
     tuple val(model), val(ref), file("ont/*"), file("ont/*"), file("snippy/*")

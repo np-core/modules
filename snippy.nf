@@ -73,21 +73,22 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${ref}/polishers/snippy", mode: "symlink", pattern: "${id}_snippy/${id}.vcf"
+        publishDir "${params.outdir}/${ref}/polishers/snippy", mode: "symlink", pattern: "${id}.vcf"
 
         input:
         tuple val(model), val(id), file(forward), file(reverse), file(ont)
         each file(reference)
 
         output:
-        tuple val(model), val(id), val(ref), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
+        tuple val(model), val(id), val(ref), file(reference), file(ont), file("${id}.vcf") 
 
         script:
 
         ref = reference.simpleName
 
         """
-        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 ${id}_1_qc.fq.gz --R2 ${id}_2_qc.fq.gz $params.snippy_params
+        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
+        mv ${id}_snippy/${id}.vcf . 
         """
 
     }
@@ -99,18 +100,19 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "symlink", pattern: "${id}_snippy/${id}.vcf"
+        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "symlink", pattern: "${id}_${reference.simpleName}.vcf"
 
         input:
-        tuple val(id), file(forward), file(reverse), file(ont)
+        tuple val(id), file(forward), file(reverse)
         each file(reference)
 
         output:
-        tuple val(id), file(reference), file(ont), file("${id}_snippy/${id}.vcf") 
+        tuple val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf") 
 
 
         """
-        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 ${id}_1_qc.fq.gz --R2 ${id}_2_qc.fq.gz $params.snippy_params
+        snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
+        mv ${id}_snippy/${id}.vcf ${id}_${reference.simpleName}.vcf
         """
 
     }

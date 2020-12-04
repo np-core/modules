@@ -38,3 +38,23 @@ process MinimapTraining {
     """
 
 }
+
+process MinimapTraining {
+
+    label "minimap2"
+    tag { "$model_name - $id - $reference" }
+
+    publishDir "${params.outdir}/${reference.simpleName}/evaluations/alignments", mode: "symlink"
+ 
+    input:
+    tuple val(id), file(fq)
+
+    output:
+    tuple val(id), file(reference), file("${id}.bam"), file("${id}.bam.bai")
+
+    """
+    minimap2 -t $task.cpus -ax map-ont $reference $fq | samtools sort | samtools view -Sb > ${id}.bam
+    samtools index ${id}.bam
+    """
+
+}

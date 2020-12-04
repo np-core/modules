@@ -42,6 +42,51 @@ process ClairVariants {
 
 }
 
+process ClairEvaluation {
+
+    label "clair"
+    tag { "$id" }
+    
+    memory { 8.GB * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    maxRetries 3
+
+    publishDir "${params.outdir}/${reference.simpleName}/clair", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
+    publishDir "${params.outdir}/${reference.simpleName}/clair", mode: "copy", pattern: "${id}_${reference.simpleName}.txt"
+
+    input:
+    tuple val(id), file(reference), file(bam), file(bai)
+
+    output:
+    tuple val(id), file("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+
+    
+    """
+    samtools faidx $reference
+    np phybeast utils print-header --fasta $reference | while read -r contig ; do
+    echo "Processing contig: \$contig"
+    clair callVarBam --chkpnt_fn ${params.clair_model} \
+                     --ref_fn $reference \
+                     --bam_fn $bam \
+                     --sampleName $id \
+                     --minCoverage 1 \
+                     --threads $task.cpus \
+                     --call_fn ${id}.\${contig}.clair.vcf \
+                     --ctgName \$contig \
+                     ${params.clair_haploid}
+    done
+
+    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}_${reference.simpleName}.vcf 
+
+    pysamstats -t variation_strand $bam -f $reference > ${id}_${reference.simpleName}.txt
+    
+    """
+
+}
+
+
+
 process ClairTraining {
 
     label "clair"
