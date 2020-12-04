@@ -39,7 +39,7 @@ process MinimapTraining {
 
 }
 
-process MinimapTraining {
+process MinimapEvaluation {
 
     label "minimap2"
     tag { "$model_name - $id - $reference" }
@@ -48,6 +48,7 @@ process MinimapTraining {
  
     input:
     tuple val(id), file(fq)
+    each file(reference)
 
     output:
     tuple val(id), file(reference), file("${id}.bam"), file("${id}.bam.bai")
