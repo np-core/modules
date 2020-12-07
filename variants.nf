@@ -65,7 +65,7 @@ process RandomForestTraining {
 
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.composite.sav"
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.qual.sav"
-    publishDir "${params.outdir}/${ref}/polishers/models/data", mode: "copy", pattern: "${model}_${ref}_model"
+    publishDir "${params.outdir}/${ref}/polishers/models/data", mode: "copy", pattern: "${model}_${ref}_model/"
 
     input:
     tuple val(model), val(ref), file("ont/*"), file("ont/*"), file("snippy/*")

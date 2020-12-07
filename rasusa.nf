@@ -41,7 +41,7 @@ process RasusaTraining {
     tag { "${model_name} - ${id} - ${coverage}x" }
     label "rasusa"
 
-    publishDir "$params.outdir/${ref}/polishers/subsets", mode: "copy"
+    publishDir "$params.outdir/${ref}/polishers/subsets", mode: "copy", pattern: "${id}_${coverage}.fq"
 
     input:
     tuple val(model_name), val(id), val(ref), file(reference), file(fq), file(snippy_vcf)
