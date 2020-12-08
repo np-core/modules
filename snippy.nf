@@ -100,7 +100,7 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${reference.simpleName}/evaluation/$eval_set", mode: "copy", pattern: "${id}_${reference.simpleName}.ref.vcf"
+        publishDir "${params.outdir}/${reference.simpleName}/evaluation/$eval_set", mode: "copy", pattern: "${id}.ref.vcf"
 
         input:
         tuple val(eval_set), val(id), file(forward), file(reverse)
@@ -112,7 +112,7 @@
 
         """
         snippy --cpus $task.cpus --outdir ${id}_snippy --prefix $id --reference $reference --R1 $forward --R2 $reverse $params.snippy_params
-        mv ${id}_snippy/${id}.vcf ${id}_${reference.simpleName}.ref.vcf
+        mv ${id}_snippy/${id}.vcf ${id}.ref.vcf
         """
 
     }

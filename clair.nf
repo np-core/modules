@@ -52,14 +52,14 @@ process ClairEvaluation {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
-    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}_${reference.simpleName}.txt"
+    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}.vcf"
+    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}.txt"
 
     input:
     tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
 
     output:
-    tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+    tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}.vcf"), file("${id}.txt")
 
     
     """
@@ -77,9 +77,9 @@ process ClairEvaluation {
                      ${params.clair_haploid}
     done
 
-    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}_${reference.simpleName}.vcf 
+    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
 
-    pysamstats -t variation_strand $bam -f $reference > ${id}_${reference.simpleName}.txt
+    pysamstats -t variation_strand $bam -f $reference > ${id}.txt
     
     """
 
