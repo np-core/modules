@@ -15,7 +15,7 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
+    tuple file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}_application_truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}_classifier_truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}_${params.caller}_truth.tsv")
     
 
     """
@@ -45,9 +45,9 @@ process ProcessEvaluations {
     file("*_evaluation.tsv")
 
     """
-    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output model_evaluation.tsv
-    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --clean --output ${params.caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*_application_truth.tsv" --extract "_application_truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output model_evaluation.tsv
+    np utils combine-df --dir . --glob "*_classifier_truth.tsv" --extract "_classifier_truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output classfier_evaluation.tsv
+    np utils combine-df --dir . --glob "*_${params.caller}_truth.tsv" --extract "_${params.caller}_truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --clean --output ${params.caller}_evaluation.tsv
     """
 
 }
