@@ -15,11 +15,11 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple file("${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
+    tuple file("r/${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("r/${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("r/${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
     
 
     """
-    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller --outdir \$PWD
+    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller --outdir r
     """
 
 }
