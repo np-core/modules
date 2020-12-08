@@ -100,7 +100,7 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "symlink", pattern: "${id}_${reference.simpleName}.vcf"
+        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
 
         input:
         tuple val(id), file(forward), file(reverse)

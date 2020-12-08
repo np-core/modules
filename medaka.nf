@@ -69,3 +69,31 @@ process MedakaTraining {
     """
 
 }
+
+process MedakaEvaluation {
+
+    label "medaka"
+    tag { "$id - $reference" }
+
+    memory { 8.GB * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    maxRetries 3
+
+    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
+    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${reference.simpleName}.txt"
+
+    input:
+    tuple val(id), file(reference), file(bam), file(bai)
+
+    output:
+    tuple val(id), var("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+
+
+    """
+    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}_${reference.simpleName}.hdf
+    medaka snp --threshold 1 $reference ${id}_${reference.simpleName}.hdf ${id}_${reference.simpleName}.vcf
+    pysamstats -t variation_strand $bam -f $reference > ${id}_${reference.simpleName}.txt
+    """
+
+}

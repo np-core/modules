@@ -15,7 +15,7 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.raw.truth.tsv")
+    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
 
     """
     np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
@@ -23,7 +23,7 @@ process EvaluateRandomForest {
 
 }
 
-process ProcessRandomForestEvaluations {
+process ProcessRandomForest {
 
 
     label "forest_evaluate"
@@ -34,9 +34,9 @@ process ProcessRandomForestEvaluations {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_application_evaluation.tsv"
-    publishDir "${params.outdir}/evaluations/classifier", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
-    publishDir "${params.outdir}/evaluations/raw", mode: "copy", pattern: "rff_${params.eval_caller}_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_model_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
+    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_${params.caller}_evaluation.tsv"
 
     input:
     file(collected)
@@ -45,9 +45,9 @@ process ProcessRandomForestEvaluations {
     file("*_evaluation.tsv")
 
     """
-    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_application_evaluation.tsv
+    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_model_evaluation.tsv
     np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*.caller.truth.tsv" --extract ".caller.truth.tsv" --extract_split "." --extract_head "id,model" --clean --output rff_${params.eval_caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model" --clean --output rff_${params.caller}_evaluation.tsv
     """
 
 }

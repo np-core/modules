@@ -45,7 +45,7 @@ process ClairVariants {
 process ClairEvaluation {
 
     label "clair"
-    tag { "$id" }
+    tag { "$id - $reference" }
     
     memory { 8.GB * task.attempt }
 
@@ -59,7 +59,7 @@ process ClairEvaluation {
     tuple val(id), file(reference), file(bam), file(bai)
 
     output:
-    tuple val(id), file("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+    tuple val(id), var("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
 
     
     """
