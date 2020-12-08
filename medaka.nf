@@ -80,14 +80,14 @@ process MedakaEvaluation {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
-    publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${reference.simpleName}.txt"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}_${reference.simpleName}.txt"
 
     input:
-    tuple val(id), file(reference), file(bam), file(bai)
+    tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
 
     output:
-    tuple val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+    tuple val(eval_set), val("${reference.simpleName}") val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
 
 
     """

@@ -8,14 +8,15 @@ process EvaluateRandomForest {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 5
 
-    publishDir "${params.outdir}/evaluations/data", mode: "copy", pattern: "*.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/evaluations", mode: "copy", pattern: "*.tsv"
 
     input:
-    tuple val(id), file("snippy/*"), file("ont/*"), file("ont/*")
+    tuple val(eval_set), val(ref), val(id), file("snippy/*"), file("ont/*"), file("ont/*")
     each file(model)
 
     output:
-    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
+    file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
+    tuple val(eval_set), val(ref)
 
     """
     np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
@@ -34,12 +35,13 @@ process ProcessEvaluations {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_model_evaluation.tsv"
-    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
-    publishDir "${params.outdir}/evaluations", mode: "copy", pattern: "rff_${params.caller}_evaluation.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_model_evaluation.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_${params.caller}_evaluation.tsv"
 
     input:
     file(collected)
+    tuple val(eval_set), val(ref)
 
     output:
     file("*_evaluation.tsv")

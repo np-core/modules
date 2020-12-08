@@ -38,10 +38,10 @@ process FastpEvaluation {
     tag { id }
 
     input:
-    tuple val(id), file(forward), file(reverse)
+    tuple val(eval_set), val(id), file(forward), file(reverse)
 
     output:
-    tuple val(id), file("${id}_1_qc.fq.gz"), file("${id}_2_qc.fq.gz")
+    tuple val(eval_set), val(id), file("${id}_1_qc.fq.gz"), file("${id}_2_qc.fq.gz")
 
     """
     fastp --in1 $forward --in2 $reverse --out1 ${id}_1_qc.fq.gz --out2 ${id}_2_qc.fq.gz --thread $task.cpus

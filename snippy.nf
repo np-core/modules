@@ -100,14 +100,14 @@
         label "snippy"
         tag { id }
 
-        publishDir "${params.outdir}/${reference.simpleName}/polishers/snippy", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
+        publishDir "${params.outdir}/${reference.simpleName}/evaluation/$eval_set", mode: "copy", pattern: "${id}_${reference.simpleName}.vcf"
 
         input:
-        tuple val(id), file(forward), file(reverse)
+        tuple val(eval_set), val(id), file(forward), file(reverse)
         each file(reference)
 
         output:
-        tuple val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf") 
+        tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf") 
 
 
         """

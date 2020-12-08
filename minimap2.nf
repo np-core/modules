@@ -44,14 +44,14 @@ process MinimapEvaluation {
     label "minimap2"
     tag { "$id - $reference" }
 
-    publishDir "${params.outdir}/${reference.simpleName}/evaluations/alignments", mode: "symlink"
+    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}", mode: "symlink"
  
     input:
-    tuple val(id), file(fq)
+    tuple val(eval_set), val(id), file(fq)
     each file(reference)
 
     output:
-    tuple val(id), file(reference), file("${id}.bam"), file("${id}.bam.bai")
+    tuple val(eval_set), val(id), file(reference), file("${id}.bam"), file("${id}.bam.bai")
 
     """
     minimap2 -t $task.cpus -ax map-ont $reference $fq | samtools sort | samtools view -Sb > ${id}.bam
