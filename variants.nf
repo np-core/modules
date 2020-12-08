@@ -19,7 +19,7 @@ process EvaluateRandomForest {
     
 
     """
-    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
+    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller --outdir \$PWD
     """
 
 }
