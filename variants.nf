@@ -11,15 +11,15 @@ process EvaluateRandomForest {
     publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/evaluations", mode: "copy", pattern: "*.tsv"
 
     input:
-    tuple val(eval_set), val(ref), val(id), file("snippy/*"), file("ont/*"), file("ont/*")
+    tuple val(eval_set), val(id), val(ref), file("snippy/*"), file("ont/*"), file("ont/*")
     each file(model)
 
     output:
-    tuple file("r/${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("r/${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("r/${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
+    tuple file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("result/evaluation/${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
     
 
     """
-    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller --outdir r
+    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller --outdir result
     """
 
 }
