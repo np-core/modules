@@ -15,11 +15,11 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
-    tuple val(eval_set), val(ref)
+    tuple file("${id}.${model.simpleName}.${eval_set}.${ref}.application.truth.tsv"), file("${id}.${model.simpleName}.${eval_set}.${ref}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${eval_set}.${ref}.${params.caller}.truth.tsv")
+    
 
     """
-    np variants forest-evaluate --prefix ${id}_${model.simpleName} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
+    np variants forest-evaluate --prefix ${id}.${model.simpleName}.${eval_set}.${ref} --dir_snippy snippy/ --dir_ont ont/ --model $model --mask_weak $params.mask_weak --caller $params.caller
     """
 
 }
@@ -41,15 +41,14 @@ process ProcessEvaluations {
 
     input:
     file(collected)
-    tuple val(eval_set), val(ref)
 
     output:
     file("*_evaluation.tsv")
 
     """
-    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_model_evaluation.tsv
-    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model" --output rff_classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model" --clean --output rff_${params.caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output rff_model_evaluation.tsv
+    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output rff_classfier_evaluation.tsv
+    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --clean --output rff_${params.caller}_evaluation.tsv
     """
 
 }
