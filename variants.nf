@@ -23,7 +23,7 @@ process EvaluateRandomForest {
 
 }
 
-process ProcessRandomForest {
+process ProcessEvaluations {
 
 
     label "forest_evaluate"
