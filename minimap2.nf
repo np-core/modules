@@ -42,7 +42,7 @@ process MinimapTraining {
 process MinimapEvaluation {
 
     label "minimap2"
-    tag { "$model_name - $id - $reference" }
+    tag { "$id - $reference" }
 
     publishDir "${params.outdir}/${reference.simpleName}/evaluations/alignments", mode: "symlink"
  
