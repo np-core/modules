@@ -35,8 +35,8 @@ process ProcessEvaluations {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "model_evaluation.tsv"
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "${params.caller}_evaluation.tsv"
+    publishDir "${params.outdir}/", mode: "copy", pattern: "model_evaluation.tsv"
+    publishDir "${params.outdir}/", mode: "copy", pattern: "${params.caller}_evaluation.tsv"
 
     input:
     file(collected)
