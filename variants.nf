@@ -15,7 +15,7 @@ process EvaluateRandomForest {
     each file(model)
 
     output:
-    file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
+    tuple file("${id}.${model.simpleName}.application.truth.tsv"), file("${id}.${model.simpleName}.classifier.truth.tsv"), file("${id}.${model.simpleName}.${params.caller}.truth.tsv")
     tuple val(eval_set), val(ref)
 
     """
@@ -75,6 +75,7 @@ process RandomForestTraining {
     output:
     tuple val(model), val(ref), file("${model}_${ref}.composite.sav")
     file("${model}_${ref}_model")
+
     """
     np variants forest-train --dir_snippy snippy/ --dir_ont ont/ --caller ${params.caller} --prefix ${model}_${ref} --test_size ${params.test_size} --outdir model
     mv model/models/${model}_${ref}.composite.sav ${model}_${ref}.composite.sav 
