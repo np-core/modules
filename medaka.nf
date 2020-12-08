@@ -87,7 +87,7 @@ process MedakaEvaluation {
     tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
 
     output:
-    tuple val(eval_set), val("${reference.simpleName}") val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
+    tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.vcf"), file("${id}_${reference.simpleName}.txt")
 
 
     """
