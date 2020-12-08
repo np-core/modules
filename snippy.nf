@@ -107,7 +107,7 @@
         each file(reference)
 
         output:
-        tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}_${reference.simpleName}.ref.vcf") 
+        tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}.ref.vcf") 
 
 
         """
