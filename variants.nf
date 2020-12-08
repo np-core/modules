@@ -35,9 +35,8 @@ process ProcessEvaluations {
     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_model_evaluation.tsv"
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_classfier_evaluation.tsv"
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "rff_${params.caller}_evaluation.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "model_evaluation.tsv"
+    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}", mode: "copy", pattern: "${params.caller}_evaluation.tsv"
 
     input:
     file(collected)
@@ -46,9 +45,9 @@ process ProcessEvaluations {
     file("*_evaluation.tsv")
 
     """
-    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output rff_model_evaluation.tsv
-    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output rff_classfier_evaluation.tsv
-    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --clean --output rff_${params.caller}_evaluation.tsv
+    np utils combine-df --dir . --glob "*.application.truth.tsv" --extract ".application.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output model_evaluation.tsv
+    np utils combine-df --dir . --glob "*.classifier.truth.tsv" --extract ".classifier.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --output classfier_evaluation.tsv
+    np utils combine-df --dir . --glob "*.${params.caller}.truth.tsv" --extract ".${params.caller}.truth.tsv" --extract_split "." --extract_head "id,model,eval_set,reference" --clean --output ${params.caller}_evaluation.tsv
     """
 
 }
