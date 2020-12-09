@@ -49,7 +49,7 @@ process MedakaTraining {
 
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${coverage}.vcf"
@@ -77,7 +77,7 @@ process MedakaEvaluation {
 
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.vcf"

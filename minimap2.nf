@@ -46,7 +46,7 @@ process MinimapEvaluation {
 
     memory { params.minimap_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}", mode: "symlink"

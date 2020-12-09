@@ -5,7 +5,7 @@ process EvaluateRandomForest {
 
     memory { params.forest_evaluate_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 5
 
     publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/evaluations", mode: "copy", pattern: "*.tsv"
@@ -32,7 +32,7 @@ process ProcessEvaluations {
 
     memory { params.forest_evaluate_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/", mode: "copy", pattern: "model_evaluation.tsv"
@@ -60,7 +60,7 @@ process RandomForestTraining {
 
     memory { params.forest_train_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${ref}/polishers/models", mode: "copy", pattern: "${model}_${ref}.composite.sav"

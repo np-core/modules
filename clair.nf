@@ -5,7 +5,7 @@ process ClairVariants {
     
     memory { params.clair_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
@@ -49,7 +49,7 @@ process ClairEvaluation {
     
     memory { params.clair_mem * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}.vcf"
@@ -94,7 +94,7 @@ process ClairTraining {
     
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${coverage}.vcf"
@@ -138,7 +138,7 @@ process ClairCandidates {
     
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
