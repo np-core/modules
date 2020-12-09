@@ -58,8 +58,12 @@ process MinimapEvaluation {
     output:
     tuple val(eval_set), val(id), file(reference), file("${id}.bam"), file("${id}.bam.bai")
 
+    // Sometimes from Guppy basecalling there may be a mapping error of some reads (?)
+    // Do not pipe as mapping will continue
+
     """
-    minimap2 -t $task.cpus -ax map-ont $reference $fq | samtools sort | samtools view -Sb > ${id}.bam
+    minimap2 -t $task.cpus -ax map-ont $reference $fq > tmp.sam 
+    samtools sort tmp.sam | samtools view -Sb > ${id}.bam
     samtools index ${id}.bam
     """
 
