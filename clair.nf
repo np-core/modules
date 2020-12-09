@@ -5,7 +5,7 @@ process ClairVariants {
     
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
     maxRetries 3
 
     publishDir "${params.outdir}/clair", mode: "copy", pattern: "${id}.vcf"
@@ -49,7 +49,7 @@ process ClairEvaluation {
     
     memory { 8.GB * task.attempt }
 
-    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
     maxRetries 3
 
     publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/clair", mode: "copy", pattern: "${id}.vcf"
