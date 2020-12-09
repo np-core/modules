@@ -44,6 +44,11 @@ process MinimapEvaluation {
     label "minimap2"
     tag { "$id - $reference" }
 
+    memory { params.minimap_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+    maxRetries 3
+
     publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}", mode: "symlink"
  
     input:
