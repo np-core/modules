@@ -3,7 +3,7 @@ process ClairVariants {
     label "clair"
     tag { "$id" }
     
-    memory { 8.GB * task.attempt }
+    memory { params.clair_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
     maxRetries 3
@@ -47,7 +47,7 @@ process ClairEvaluation {
     label "clair"
     tag { "$id - $reference" }
     
-    memory { 8.GB * task.attempt }
+    memory { params.clair_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
     maxRetries 3
