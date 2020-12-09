@@ -34,7 +34,7 @@ process ClairVariants {
                      ${params.clair_haploid}
     done
 
-    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
+    vcfcat ${id}.*.clair.vcf | bcftools sort -m 8G -o ${id}.vcf 
 
     pysamstats -t variation_strand $bam -f $reference > ${id}.txt
     
@@ -77,7 +77,7 @@ process ClairEvaluation {
                      ${params.clair_haploid}
     done
 
-    vcfcat ${id}.*.clair.vcf | bcftools sort -m 2G -o ${id}.vcf 
+    vcfcat ${id}.*.clair.vcf | bcftools sort -m 8G -o ${id}.vcf 
 
     pysamstats -t variation_strand $bam -f $reference > ${id}.txt
     
