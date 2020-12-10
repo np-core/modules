@@ -57,7 +57,6 @@ process MedakaTraining {
 
     input:
     tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
-    file(model)
 
     output:
     tuple val(model_name), val(ref), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
