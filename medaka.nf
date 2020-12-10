@@ -64,7 +64,7 @@ process MedakaTraining {
 
 
     """
-    medaka consensus --model $model --threads $task.cpus $bam ${id}_${coverage}.hdf
+    medaka consensus --model $params.medaka_model  --threads $task.cpus $bam ${id}_${coverage}.hdf
     medaka snp --threshold 1 $reference ${id}_${coverage}.hdf ${id}_${coverage}.vcf
     pysamstats -t variation_strand $bam -f $reference > ${id}_${coverage}.txt
     """
@@ -86,14 +86,13 @@ process MedakaEvaluation {
 
     input:
     tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
-    file(model)
 
     output:
     tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}.vcf"), file("${id}.txt")
 
 
     """
-    medaka consensus --model $model --threads $task.cpus $bam ${id}.hdf
+    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}.hdf
     medaka snp --threshold 1 $reference ${id}.hdf ${id}.vcf
     pysamstats -t variation_strand $bam -f $reference > ${id}.txt
     """
