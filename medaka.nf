@@ -80,8 +80,8 @@ process MedakaEvaluation {
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
 
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.vcf"
-    publishDir "${params.outdir}/${ref}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.txt"
+    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.vcf"
+    publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.txt"
 
     input:
     tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
