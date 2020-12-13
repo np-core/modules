@@ -47,7 +47,7 @@ process MedakaTraining {
     label "medaka"
     tag { "$model_name - $id - $reference" }
 
-    memory { 8.GB * task.attempt }
+    memory { params.medaka_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
@@ -75,7 +75,7 @@ process MedakaEvaluation {
     label "medaka"
     tag { "$id - $reference" }
 
-    memory { 8.GB * task.attempt }
+    memory { params.medaka_mem * task.attempt }
 
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 3
