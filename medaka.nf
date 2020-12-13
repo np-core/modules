@@ -27,7 +27,7 @@ process MedakaVariants {
     publishDir "${params.outdir}/medaka", mode: "copy", pattern: "${id}.txt"
 
     input:
-    tuple val(id), file(bam), file(bai)
+    tuple val(id), file(fq)
     file(reference)
 
     output:
@@ -35,9 +35,9 @@ process MedakaVariants {
     tuple val(id), file(bam), file(bai)
 
     """
-    medaka consensus --model $params.medaka_model --threads $task.cpus ${id}.bam ${id}.hdf
-    medaka snp --threshold 1 $reference ${id}.hdf ${id}.vcf
-    pysamstats -t variation_strand $bam -f $reference > ${id}.txt
+    medaka_haploid_variant --model $params.medaka_model --threads $task.cpus --output_dir vars $fq $reference
+    mv vars/consensus_to_ref.vcf ${id}_${coverage}.vcf
+    pysamstats -t variation_strand vars/calls_to_draft.bam -f $reference > ${id}_${coverage}.txt
     """
 
 }
