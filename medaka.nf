@@ -63,7 +63,7 @@ process MedakaTraining {
 
 
     """
-    medaka consensus --model $params.medaka_model  --threads $task.cpus $bam ${id}_${coverage}.hdf
+    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}_${coverage}.hdf
     medaka snp --threshold 1 $reference ${id}_${coverage}.hdf ${id}_${coverage}.vcf
     pysamstats -t variation_strand $bam -f $reference > ${id}_${coverage}.txt
     """
@@ -84,16 +84,17 @@ process MedakaEvaluation {
     publishDir "${params.outdir}/${reference.simpleName}/evaluation/${eval_set}/medaka", mode: "copy", pattern: "${id}.txt"
 
     input:
-    tuple val(eval_set), val(id), file(reference), file(bam), file(bai)
+    tuple val(eval_set), val(id), file(fq)
+    each file(reference)
 
     output:
     tuple val(eval_set), val(id), val("${reference.simpleName}"), file("${id}.vcf"), file("${id}.txt")
 
 
     """
-    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}.hdf
-    medaka snp --threshold 1 $reference ${id}.hdf ${id}.vcf
-    pysamstats -t variation_strand $bam -f $reference > ${id}.txt
+    medaka_haploid_variant --reads_fastx --output_dir vars --ref_fasta $reference --threads $task.cpus
+    mv vars/consensus_to_ref.vcf ${id}.vcf
+    pysamstats -t variation_strand vars/calls_to_draft.bam -f $reference > ${id}.txt
     """
 
 }
