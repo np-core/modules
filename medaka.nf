@@ -92,7 +92,7 @@ process MedakaEvaluation {
 
 
     """
-    medaka_haploid_variant --model $param.medaka_model --threads $task.cpus --output_dir vars $fq $reference
+    medaka_haploid_variant --model $params.medaka_model --threads $task.cpus --output_dir vars $fq $reference
     mv vars/consensus_to_ref.vcf ${id}.vcf
     pysamstats -t variation_strand vars/calls_to_draft.bam -f $reference > ${id}.txt
     """
