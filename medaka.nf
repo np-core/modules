@@ -56,16 +56,16 @@ process MedakaTraining {
     publishDir "${params.outdir}/${ref}/polishers/variants", mode: "copy", pattern: "${id}_${coverage}.txt"
 
     input:
-    tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(bam), file(bai), file(snippy_vcf)
+    tuple val(model_name), val(id), val(ref), val(coverage), file(reference), file(fq), file(snippy_vcf)
 
     output:
     tuple val(model_name), val(ref), file("${id}_${coverage}.vcf"), file("${id}_${coverage}.txt"), file(snippy_vcf)
 
 
     """
-    medaka consensus --model $params.medaka_model --threads $task.cpus $bam ${id}_${coverage}.hdf
-    medaka snp --threshold 1 $reference ${id}_${coverage}.hdf ${id}_${coverage}.vcf
-    pysamstats -t variation_strand $bam -f $reference > ${id}_${coverage}.txt
+    medaka_haploid_variant --model $params.medaka_model --threads $task.cpus --output_dir vars $fq $reference
+    mv vars/consensus_to_ref.vcf ${id}_${coverage}.vcf
+    pysamstats -t variation_strand vars/calls_to_draft.bam -f $reference > ${id}_${coverage}.txt
     """
 
 }
