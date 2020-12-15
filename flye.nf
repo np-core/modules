@@ -3,6 +3,11 @@ process Flye {
     tag { id }
     label "flye"
 
+    memory { params.flye_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
+    maxRetries 3
+
     publishDir "$params.outdir/ont/assembly", mode: "copy", pattern: "*.fasta"
     publishDir "$params.outdir/ont/assembly", mode: "copy", pattern: "*.gfa"
     publishDir "$params.outdir/ont/assembly", mode: "copy", pattern: "*.txt"
