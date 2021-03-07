@@ -18,17 +18,17 @@ process Bonito {
 
     """
     if [[ -f $path ]]; then
-        if [[ ($path == *.tar.gz) || ($path == *.tar) ]]; then
-            # if it is archived
+        if [[ ($path == *.tar.gz) ]]; then
+            mkdir fast5_in
+            tar -xfz $path -C fast5_in
+        elif [[  ($path == *.tar) ]]; then
             mkdir fast5_in
             tar -xf $path -C fast5_in
         else
-            # if it is a single file
             mkdir fast5_in
             mv $path fast5_in
         fi
     elif [[ -d $path ]]; then
-        # if the path variable is a single directory
         mv $path fast5_in
     else
         echo "Error in parsing input"

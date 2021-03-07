@@ -12,7 +12,7 @@ process Qcat {
     tuple val(id), file("${id}")
 
     """
-    qcat -f $fq -b ${id} $params.qcat_params
+    qcat -f $fq -b ${id} --trim $params.qcat_params
     """
 
 }
