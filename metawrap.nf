@@ -58,7 +58,7 @@ process MetaWrapBinning {
 
 }
 
-process MetaWrap_Binassembly {
+process MetaWrapBinAssembly {
 
     label "metawrap_binassembly"
     tag { "$id" }
@@ -79,7 +79,7 @@ process MetaWrap_Binassembly {
 
 }
 
-process MetaWrap_Binops {
+process MetaWrapBinOps {
 
     label "metawrap_binops"
     tag { "$id" }
@@ -91,9 +91,6 @@ process MetaWrap_Binops {
     input:
     tuple val(id), file(bin_reassembly)
     tuple val(id), file(fwd), file(rev)
-
-    output:
-    tuple val(id), file
 
     """
     metawrap classify_bins -b $bin_reassembly/reassembled_bins -o BIN_CLASSIFICATION -t $task.cpus
