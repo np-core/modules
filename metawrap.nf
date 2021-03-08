@@ -1,4 +1,4 @@
-process MetaWrap::QC {
+process MetaWrapQC {
 
     label "metawrap_qc"
     tag { "$id" }
@@ -17,7 +17,7 @@ process MetaWrap::QC {
 
 }
 
-process MetaWrap::ASSEMBLY {
+process MetaWrapAssembly {
 
     label "metawrap_assembly"
     tag { "$id" }
@@ -36,7 +36,7 @@ process MetaWrap::ASSEMBLY {
 
 }
 
-process MetaWrap::BINNING {
+process MetaWrapBinning {
 
     label "metawrap_binning"
     tag { "$id" }
@@ -58,7 +58,7 @@ process MetaWrap::BINNING {
 
 }
 
-process MetaWrap::BINASSEMBLY {
+process MetaWrap_Binassembly {
 
     label "metawrap_binassembly"
     tag { "$id" }
@@ -79,7 +79,7 @@ process MetaWrap::BINASSEMBLY {
 
 }
 
-process MetaWrap::BINOPS {
+process MetaWrap_Binops {
 
     label "metawrap_binops"
     tag { "$id" }
