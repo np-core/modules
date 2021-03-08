@@ -31,7 +31,7 @@ process MetaWrap::ASSEMBLY {
     tuple val(id), file("ASSEMBLY/final_assembly.fasta")
 
     """
-    metawrap assembly -1 $fwd -2 $rev-m $task.memory -t $task.cpus $params.assembly_options -o ASSEMBLY
+    metawrap assembly -1 $fwd -2 $rev -m $task.memory -t $task.cpus $params.assembly_options -o ASSEMBLY
     """
 
 }
