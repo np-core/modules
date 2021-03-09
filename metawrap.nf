@@ -32,11 +32,8 @@ process MetaWrapAssembly {
 
     script:
 
-    assembly_memory = task.memory.replaceAll("[^0-9]", "")
-    println assembly_memory
-
     """
-    metawrap assembly -1 $fwd -2 $rev -m $assembly_memory -t $task.cpus $params.assembly_options -o ASSEMBLY
+    metawrap assembly -1 $fwd -2 $rev -m $params.assembly_memory -t $task.cpus $params.assembly_options -o ASSEMBLY
     """
 
 }
@@ -79,12 +76,9 @@ process MetaWrapBinAssembly {
     tuple val(id), file("BIN_REASSEMBLY/")
 
     script:
-
-    assembly_memory = task.memory.replaceAll("[^0-9]", "")
-    println assembly_memory
     
     """
-    metawrap reassemble_bins -o BIN_REASSEMBLY -1 $fwd -2 $rev -t $task.cpus -m $assembly_memory -c $params.completeness -x $params.contamination -b $bin_refinement/metawrap_${params.completeness}_${params.contamination}_bins
+    metawrap reassemble_bins -o BIN_REASSEMBLY -1 $fwd -2 $rev -t $task.cpus -m $params.assembly_memory -c $params.completeness -x $params.contamination -b $bin_refinement/metawrap_${params.completeness}_${params.contamination}_bins
     """
 
 }
