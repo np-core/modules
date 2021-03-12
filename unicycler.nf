@@ -8,7 +8,7 @@ process UnicyclerHybrid {
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 5
 
-    publishDir "${params.outdir}/assembly/hybrid/unicycler", mode: "copy"
+    publishDir "${params.outdir}/hybrid/unicycler", mode: "copy"
 
     input:
     tuple val(id), file(fwd), file(rev), file(fq)
