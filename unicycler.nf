@@ -14,10 +14,11 @@ process UnicyclerHybrid {
     tuple val(id), file(fwd), file(rev), file(fq)
 
     output:    
-    file("${id}_unicycler")
+    tuple val(id), file("${id}.fasta")
 
     """
-    unicycler -1 $fwd -2 $rev -l $fq -o ${id}_unicycler --threads $task.cpus --no_correct
+    unicycler -1 $fwd -2 $rev -l $fq -o unicycler --threads $task.cpus --no_correct
+    mv unicycler/assembly.fasta ${id}.fasta
     """
 
 }
