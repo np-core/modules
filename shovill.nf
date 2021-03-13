@@ -16,7 +16,6 @@ process Shovill {
     shovill --R1 $forward --R2 $reverse --cpus $task.cpus --ram $task.memory \
     --depth $params.depth --assembler $params.assembler --outdir $id --force
     mv ${id}/contigs.fa ${id}.assembly.fasta
-    mv ${id}/contigs.gfa ${id}.assembly.gfa
     """
 
 }
