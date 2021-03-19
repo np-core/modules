@@ -15,10 +15,10 @@ process TreeTime {
 
 
     """
-    nanopath phybeast utils prepare-metadata -m $meta_data -p treetime -o treetime.meta
+    nanopath utils prepare-metadata -m $meta_data -p treetime -o treetime.meta
     treetime --tree $tree --aln $alignment --dates treetime.meta --branch-length-mode auto \
     --covariation --coalescent skyline --confidence --outdir ${id}_tt
-    nanopath phybeast utils extract-rate -f ${id}_tt/molecular_clock.txt -p treetime -o ${id}_rate.txt
+    nanopath utils extract-rate -f ${id}_tt/molecular_clock.txt -p treetime -o ${id}_rate.txt
     """
 
 }

@@ -16,8 +16,8 @@ process DateRandomisation {
     file("${id}_daterandom.png")
 
     """
-    nanopath phybeast utils date-random-test --dates $meta_data --alignment $alignment --tree $tree --replicates $params.replicates
-    nanopath phybeast utils date-random-test --rate_file rates.tsv --clock_rate_file $rate
+    nanopath utils date-random-test --dates $meta_data --alignment $alignment --tree $tree --replicates $params.replicates
+    nanopath utils date-random-test --rate_file rates.tsv --clock_rate_file $rate
     mv date_random_test/date_randomisation_test.png ${id}_daterandom.png
     mv rates.tsv ${id}_rates.tsv
     """
@@ -38,8 +38,8 @@ process VariantSites {
     tuple val(id), file("${id}.noref.variants.fasta")
 
     """
-    nanopath phybeast utils remove-reference -a $alignment -o aln.noref.fasta
-    nanopath phybeast utils remove-invariant -a aln.noref.fasta -o ${id}.noref.variants.fasta
+    nanopath utils remove-reference -a $alignment -o aln.noref.fasta
+    nanopath utils remove-invariant -a aln.noref.fasta -o ${id}.noref.variants.fasta
     """
 
 }
