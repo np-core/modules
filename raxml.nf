@@ -1,7 +1,7 @@
 process RAxML {
 
     label "raxml"
-    tag { "$params.tree_model" }
+    tag { "$params.raxml_model" }
 
     publishDir "${params.outdir}/phylogeny", mode: "copy"
 

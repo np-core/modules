@@ -27,7 +27,7 @@ process DateRandomisation {
 process VariantSites {
 
     label "phybeast"
-    tag { "$tree" }
+    tag { "$alignment" }
 
     publishDir "${params.outdir}/alignment", mode: "copy"
 
