@@ -6,14 +6,14 @@ process RAxML {
     publishDir "${params.outdir}/phylogeny", mode: "copy"
 
     input:
-    file(alignment)
+    tuple val(id), file(alignment)
 
     output:
-    file("tree.newick")
+    tuple val(id), file("${id}.newick")
 
     """
     raxml-ng --msa $alignment --model $params.raxml_model $params.raxml_params --threads $task.cpus --prefix rax --force
-    mv rax.raxml.bestTree tree.newick
+    mv rax.raxml.bestTree ${id}.newick
     """
 
 }

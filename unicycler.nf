@@ -8,7 +8,7 @@ process UnicyclerHybrid {
     errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
     maxRetries 5
 
-    publishDir "${params.outdir}/hybrid/unicycler", mode: "copy"
+    publishDir "${params.outdir}/unicycler/assembly", mode: "copy"
 
     input:
     tuple val(id), file(fwd), file(rev), file(fq)
@@ -18,7 +18,7 @@ process UnicyclerHybrid {
 
     """
     unicycler -1 $fwd -2 $rev -l $fq -o unicycler --threads $task.cpus --no_correct
-    mv unicycler/assembly.fasta ${id}.fasta
+    mv unicycler/assembly.fasta ${id}.unicycler.fasta
     """
 
 }

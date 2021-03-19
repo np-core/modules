@@ -2,23 +2,23 @@ process TreeTime {
 
     label "treetime"
 
-    publishDir "${params.outdir}", mode: "copy"
+    publishDir "${params.outdir}/treetime", mode: "copy"
 
     input:
-    file(tree)
+    tuple val(id), file(tree)
     file(meta_data)
     file(alignment)
 
     output:
-    file("rate.txt")
-    file("treetime")
+    file("${id}_rate.txt")
+    file("${id}_tt")
 
 
     """
     nanopath phybeast utils prepare-metadata -m $meta_data -p treetime -o treetime.meta
     treetime --tree $tree --aln $alignment --dates treetime.meta --branch-length-mode auto \
-    --covariation --coalescent skyline --confidence --outdir treetime
-    nanopath phybeast utils extract-rate -f treetime/molecular_clock.txt -p treetime -o rate.txt
+    --covariation --coalescent skyline --confidence --outdir ${id}_tt
+    nanopath phybeast utils extract-rate -f ${id}_tt/molecular_clock.txt -p treetime -o ${id}_rate.txt
     """
 
 }

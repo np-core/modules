@@ -3,7 +3,7 @@ process Dnadiff {
     tag { id }
     label "dnadiff"
 
-    publishDir "$params.outdir/hybrid/dnadiff", mode: "copy", pattern: "*.report"
+    publishDir "$params.outdir/${params.tag}/dnadiff", mode: "copy", pattern: "*.report"
 
     input:
     tuple val(id), file(query_assembly), file(reference_assembly)

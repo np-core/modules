@@ -3,6 +3,11 @@ process Medaka {
     tag { id }
     label "medaka"
 
+    memory { params.medaka_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
+    maxRetries 5
+
     publishDir "$params.outdir/ont/assembly", mode: "copy", pattern: "*.medaka.fasta"
 
     input:
@@ -22,6 +27,11 @@ process MedakaVariants {
 
     label "medaka"
     tag { "$id" }
+
+    memory { params.medaka_mem * task.attempt }
+
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'ignore' }
+    maxRetries 5
 
     publishDir "${params.outdir}/medaka", mode: "copy", pattern: "${id}.vcf"
     publishDir "${params.outdir}/medaka", mode: "copy", pattern: "${id}.txt"
