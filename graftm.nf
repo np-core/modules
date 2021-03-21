@@ -6,13 +6,13 @@ process GraftM {
     publishDir "${params.outdir}/graftm/$pkg", mode: "copy", pattern: "*"
 
     input:
-    tuple val(id), file(fwd), file(rev), file(graftm), val(pkg)
+    tuple val(id), file(fwd), file(rev), val(pkg), file(graftm)
 
     output:
     file("${id}")
 
     """
-    graftm graft --forward $fwd --reverse $rev --graftm_package $graftm --output_directory $id
+    graftM graft --forward $fwd --reverse $rev --graftm_package $graftm --output_directory $id
     """
 
 }
