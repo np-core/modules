@@ -12,7 +12,7 @@ process GraftM {
     file("${id}")
 
     """
-    graftm graft --forward $fwd --reverse $rev --graftm_package $package --output_directory ${id}
+    graftm graft --forward $fwd --reverse $rev 
     """
 
 }
