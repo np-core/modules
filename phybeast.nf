@@ -6,10 +6,8 @@ process DateRandomisation {
     publishDir "${params.outdir}/date_randomisation", mode: "copy"
 
     input:
-    tuple val(id), file(tree)
-    file(rate)
+    tuple val(id), file(tree), file(alignment), file(rate)
     file(meta_data)
-    tuple val(id), file(alignment)
 
     output:
     file("${id}_rates.tsv")

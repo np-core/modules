@@ -5,12 +5,11 @@ process TreeTime {
     publishDir "${params.outdir}/treetime", mode: "copy"
 
     input:
-    tuple val(id), file(tree)
+    tuple val(id), file(tree), file(alignment)
     file(meta_data)
-    tuple val(id), file(alignment)
 
     output:
-    file("${id}_rate.txt")
+    tuple val(id), file(tree), file(alignment), file("${id}_rate.txt")
     file("${id}_tt")
 
 
