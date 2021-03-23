@@ -7,7 +7,7 @@ process TreeTime {
     input:
     tuple val(id), file(tree)
     file(meta_data)
-    file(alignment)
+    tuple val(id), file(alignment)
 
     output:
     file("${id}_rate.txt")

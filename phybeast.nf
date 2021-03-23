@@ -9,7 +9,7 @@ process DateRandomisation {
     tuple val(id), file(tree)
     file(rate)
     file(meta_data)
-    file(alignment)
+    tuple val(id), file(alignment)
 
     output:
     file("${id}_rates.tsv")
