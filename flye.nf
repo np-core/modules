@@ -17,6 +17,7 @@ process Flye {
 
     output:
     tuple val(id), file("${id}.fasta")
+    tuple file("${id}.txt"), file("${id}.gfa")
 
     """
     flye --nano-raw $fq $params.assembly_options -t $task.cpus -o assembly
