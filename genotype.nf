@@ -50,7 +50,7 @@
     script:
 
     """
-    mykrobe predict --sample $id --species $params.mykrobe_species $params.mykrobe_other --out ${id}.json --format json -i $forward $reverse
+    mykrobe predict $id $params.mykrobe_species $params.mykrobe_other --out ${id}.json --format json -1 $forward $reverse --threads $task.cpus
     """
 
 }
