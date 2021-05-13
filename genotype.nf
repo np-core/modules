@@ -34,7 +34,7 @@
 
 }
 
- process ReadGenotype {
+ process Mykrobe {
 
     tag { id }
     label "genotype"
@@ -49,10 +49,8 @@
 
     script:
 
-    if (params.mtuberculosis)
-        
-        """
-        mykrobe predict --sample $id --species $params.mykrobe_species --panel $params.mykrobe_panel --out ${id}.json --format json -i $forward $reverse
-        """
+    """
+    mykrobe predict --sample $id --species $params.mykrobe_species $params.mykrobe_other --out ${id}.json --format json -i $forward $reverse
+    """
 
 }
